@@ -1,5 +1,6 @@
 package com.fedex.feedbackfrog.controller;
 
+import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.service.UserServiceImpl;
 import com.fedex.feedbackfrog.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,21 @@ public class UserController {
   }
 
   @GetMapping("/user")
-  public ResponseEntity getUser(@RequestParam(required = false) String name) {
+  public ResponseEntity getUser(@RequestParam(required = false) String name) throws Exception {
     if (name == null) {
       return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+    } else if (userService.findUserByName(name) != null) {
+      return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
+    } else {
+      throw new GeneralException("User list is empty", HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
   }
 
-  @GetMapping ("/user/{id}")
-  public ResponseEntity getUserById(@PathVariable long id) {
-    return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
+  @GetMapping("/user/{id}")
+  public ResponseEntity getUserById(@PathVariable long id) throws Exception {
+    if (userService.findUserById(id) != null) {
+      return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
+    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.BAD_REQUEST);
   }
 
   //post -- to be modified based on google auth
@@ -44,8 +50,10 @@ public class UserController {
   }
 
   @DeleteMapping("/user/{id}")
-  public ResponseEntity deleteUser(@PathVariable long id) {
-    userService.deleteUser(id);
-    return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+  public ResponseEntity deleteUser(@PathVariable long id) throws Exception {
+    if (userService.findUserById(id) != null) {
+      userService.deleteUser(id);
+      return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
   }
 }
