@@ -8,6 +8,6 @@ Configs:
 
 Database Environment Variables:
 
-- `DB_URL`
-- `DB_USERNAME`
-- `DB_PASSWORD`
+- `DATABASE_URL`
+- `DATABASE_USERNAME`
+- `DATABASE_PASSWORD`
