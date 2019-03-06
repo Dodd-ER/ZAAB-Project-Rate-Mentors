@@ -10,4 +10,5 @@ public interface ReviewService {
   ReviewDTO getById(long id);
   void deleteById(long id);
   List<ReviewDTO> getReviewByTextContaining(String text);
+  void updateReview(ReviewDTO reviewDTO, long id);
 }

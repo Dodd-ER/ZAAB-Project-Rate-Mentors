@@ -33,7 +33,7 @@ public class ReviewController {
 
   @GetMapping("/")
   public ResponseEntity getByKeyword(@RequestParam(value = "text",required = false) String text){
-    return new ResponseEntity(service.getReviewByTextContaining(text), HttpStatus.OK);
+    return new ResponseEntity<>(service.getReviewByTextContaining(text), HttpStatus.OK);
   }
 
   @PostMapping
@@ -41,6 +41,12 @@ public class ReviewController {
     service.saveReview(reviewDTO);
     slackMessageService.sendMessage(reviewDTO);
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity updateReview(@RequestBody ReviewDTO reviewDTO, @PathVariable long id) {
+    service.updateReview(reviewDTO, id);
+    return new ResponseEntity(HttpStatus.I_AM_A_TEAPOT);
   }
 
   @DeleteMapping("/{id}")

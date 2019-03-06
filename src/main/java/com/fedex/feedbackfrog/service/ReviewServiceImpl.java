@@ -69,4 +69,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
     return reviewDTOList;
   }
+
+  @Override
+  public void updateReview(ReviewDTO reviewDTO, long id) {
+    Review review = repository.findById(id).orElse(null);
+    mapper.map(reviewDTO, review);
+    repository.save(review);
+  }
 }
