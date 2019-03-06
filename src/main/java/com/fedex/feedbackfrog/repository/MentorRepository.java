@@ -11,4 +11,5 @@ public interface MentorRepository extends CrudRepository<Mentor, Long> {
 
   List<Mentor> findAll();
   Mentor findByName(String name);
+  Mentor findById(long id);
 }

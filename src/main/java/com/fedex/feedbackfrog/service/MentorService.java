@@ -1,11 +1,13 @@
 package com.fedex.feedbackfrog.service;
 
-import com.fedex.feedbackfrog.model.entity.Mentor;
+import com.fedex.feedbackfrog.model.dto.MentorDTO;
 
 import java.util.List;
 
 public interface MentorService {
   List findAllMentor();
-  Mentor findMentorByName(String name);
-  Mentor findMentorById(long id);
+  MentorDTO findMentorByName(String name);
+  MentorDTO findMentorById(long id);
+  void saveNewMentor(MentorDTO mentorDTO);
+  void deleteMentorById(long id);
 }

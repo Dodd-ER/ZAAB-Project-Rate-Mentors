@@ -1,34 +1,56 @@
 package com.fedex.feedbackfrog.service;
 
+import com.fedex.feedbackfrog.model.dto.MentorDTO;
 import com.fedex.feedbackfrog.model.entity.Mentor;
 import com.fedex.feedbackfrog.repository.MentorRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MentorServiceImpl implements MentorService{
 
   private MentorRepository mentorRepository;
+  private ModelMapper modelMapper;
 
   @Autowired
-  public MentorServiceImpl(MentorRepository mentorRepository) {
+  public MentorServiceImpl(MentorRepository mentorRepository, ModelMapper modelMapper) {
     this.mentorRepository = mentorRepository;
+    this.modelMapper = modelMapper;
   }
 
   @Override
-  public List<Mentor> findAllMentor() {
-    return this.mentorRepository.findAll();
+  public List<MentorDTO> findAllMentor() {
+    List<MentorDTO> mentorDTOs = new ArrayList<>();
+    List<Mentor> mentors = this.mentorRepository.findAll();
+    for (Mentor mentor : mentors) {
+      MentorDTO mentorDTO = modelMapper.map(mentor, MentorDTO.class);
+      mentorDTOs.add(mentorDTO);
+    }
+    return mentorDTOs;
   }
 
   @Override
-  public Mentor findMentorByName(String name) {
-    return this.mentorRepository.findByName(name);
+  public MentorDTO findMentorByName(String name) {
+    return modelMapper.map(this.mentorRepository.findByName(name), MentorDTO.class);
   }
 
   @Override
-  public Mentor findMentorById(long id) {
-    return this.mentorRepository.findById(id).orElse(null);
+  public MentorDTO findMentorById(long id) {
+    return modelMapper.map(this.mentorRepository.findById(id), MentorDTO.class);
+  }
+
+  @Override
+  public void saveNewMentor(MentorDTO mentorDTO) {
+    this.mentorRepository.save(modelMapper.map(mentorDTO, Mentor.class));
+  }
+
+  @Override
+  public void deleteMentorById(long id) {
+    this.mentorRepository.deleteById(id);
   }
 }
