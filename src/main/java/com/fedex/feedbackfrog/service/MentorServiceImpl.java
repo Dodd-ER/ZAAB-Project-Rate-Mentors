@@ -16,10 +16,6 @@ public class MentorServiceImpl implements MentorService{
   private MentorRepository mentorRepository;
   private ModelMapper modelMapper;
 
-  public MentorServiceImpl(MentorRepository mentorRepository) {
-    this.mentorRepository = mentorRepository;
-  }
-
   @Autowired
   public MentorServiceImpl(MentorRepository mentorRepository, ModelMapper modelMapper) {
     this.mentorRepository = mentorRepository;
