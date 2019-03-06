@@ -12,7 +12,7 @@ public class AuthController {
 
   @RequestMapping(value="/user")
   public Principal user(Principal principal) {
-    LinkedHashMap asd = new LinkedHashMap();
+    LinkedHashMap asd;
     asd = (LinkedHashMap) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
     System.out.println(asd);
     System.out.println(principal.toString());
