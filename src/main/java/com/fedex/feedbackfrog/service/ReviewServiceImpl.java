@@ -1,6 +1,7 @@
 package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
+import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
 import com.fedex.feedbackfrog.model.entity.Review;
 import com.fedex.feedbackfrog.repository.MentorRepository;
 import com.fedex.feedbackfrog.repository.ReviewRepository;
@@ -28,7 +29,7 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public void saveReview(ReviewDTO reviewDTO) {
+  public void saveReview(ReviewDTO_Post reviewDTO) {
     if (reviewDTO != null){
       Review review = mapper.map(reviewDTO, Review.class);
       review.setReviewer(userRepository.findUserByName(reviewDTO.getReviewer().getName()));

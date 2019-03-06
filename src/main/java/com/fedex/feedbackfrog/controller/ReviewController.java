@@ -1,6 +1,7 @@
 package com.fedex.feedbackfrog.controller;
 
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
+import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
 import com.fedex.feedbackfrog.service.ReviewService;
 import com.fedex.feedbackfrog.service.SlackMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class ReviewController {
   }
 
   @PostMapping
-  public ResponseEntity saveReview(@RequestBody ReviewDTO reviewDTO){
+  public ResponseEntity saveReview(@RequestBody ReviewDTO_Post reviewDTO){
     service.saveReview(reviewDTO);
     slackMessageService.sendMessage(reviewDTO);
     return new ResponseEntity<>(HttpStatus.CREATED);

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fedex.feedbackfrog.model.SlackMessageModels.*;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
+import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,13 +13,13 @@ import java.util.Arrays;
 
 @Service
 public class SlackMessageService {
-  public void sendMessage(ReviewDTO dto){
+  public void sendMessage(ReviewDTO_Post dto){
     HttpHeaders header = new HttpHeaders();
     header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     header.setContentType(MediaType.APPLICATION_JSON);
-    header.set("Authorization", "Bearer xoxp-566386912258-567820057110-568778354018-4283ed3dff60dec56bc44b24116cd16c");
+    header.set("Authorization", "Bearer xoxp-566386912258-567820057110-570365609735-9fb45d86c94f849351395c4a027aa562");
     ObjectMapper mapper = new ObjectMapper();
-    SlackMessage message = new SlackMessage("DGPQ41YSJ", Arrays.asList(
+    SlackMessage message = new SlackMessage(dto.mentor.slackAlias, Arrays.asList(
         new Block(new SlackText("*You have a new rating*: " + getEmoji(dto.rating.toString()))),
         new BlockWithImage(
             new SlackText(dto.text),
