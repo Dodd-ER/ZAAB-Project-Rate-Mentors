@@ -14,7 +14,7 @@ public class ReviewDTO {
   }
 
   public UserForReviewListDTO reviewer;
-  public MentorDTO mentor;
+  public MentorForReviewListDTO mentor;
 
   public String getText() {
     return text;
@@ -48,11 +48,11 @@ public class ReviewDTO {
     this.reviewer = reviewer;
   }
 
-  public MentorDTO getMentor() {
+  public MentorForReviewListDTO getMentor() {
     return mentor;
   }
 
-  public void setMentor(MentorDTO mentor) {
+  public void setMentor(MentorForReviewListDTO mentor) {
     this.mentor = mentor;
   }
 }

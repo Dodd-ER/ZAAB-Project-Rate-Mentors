@@ -2,6 +2,7 @@ package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
 import com.fedex.feedbackfrog.model.entity.Review;
+import com.fedex.feedbackfrog.repository.MentorRepository;
 import com.fedex.feedbackfrog.repository.ReviewRepository;
 import com.fedex.feedbackfrog.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -14,14 +15,16 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
   private ReviewRepository repository;
-  private ModelMapper mapper;
   private UserRepository userRepository;
+  private MentorRepository mentorRepository;
+  private ModelMapper mapper;
 
   @Autowired
-  public ReviewServiceImpl(ReviewRepository repository, ModelMapper mapper, UserRepository userRepository) {
+  public ReviewServiceImpl(ReviewRepository repository, ModelMapper mapper, UserRepository userRepository, MentorRepository mentorRepository) {
     this.repository = repository;
     this.mapper = mapper;
     this.userRepository = userRepository;
+    this.mentorRepository = mentorRepository;
   }
 
   @Override
@@ -29,6 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
     if (reviewDTO != null){
       Review review = mapper.map(reviewDTO, Review.class);
       review.setReviewer(userRepository.findUserByName(reviewDTO.getReviewer().getName()));
+      review.setMentor(mentorRepository.findByName(reviewDTO.getMentor().getName()));
       repository.save(review);
     }
   }
