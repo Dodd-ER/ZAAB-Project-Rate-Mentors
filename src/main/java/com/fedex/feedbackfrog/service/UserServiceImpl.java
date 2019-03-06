@@ -3,7 +3,6 @@ package com.fedex.feedbackfrog.service;
 import com.fedex.feedbackfrog.model.dto.UserDTO;
 import com.fedex.feedbackfrog.model.entity.User;
 import com.fedex.feedbackfrog.repository.UserRepository;
-import com.fedex.feedbackfrog.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

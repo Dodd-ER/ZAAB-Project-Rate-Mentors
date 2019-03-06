@@ -31,16 +31,27 @@ public class ReviewController {
     return new ResponseEntity<>(service.getAllDtos(), HttpStatus.OK);
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity deleteByID(@PathVariable long id){
-    service.deleteById(id);
-    return new ResponseEntity<>(HttpStatus.OK);
+  @GetMapping("/")
+  public ResponseEntity getByKeyword(@RequestParam(value = "text",required = false) String text){
+    return new ResponseEntity<>(service.getReviewByTextContaining(text), HttpStatus.OK);
   }
 
   @PostMapping
   public ResponseEntity saveReview(@RequestBody ReviewDTO reviewDTO){
     service.saveReview(reviewDTO);
-    slackMessageService.sendMessage();
+    slackMessageService.sendMessage(reviewDTO);
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity updateReview(@RequestBody ReviewDTO reviewDTO, @PathVariable long id) {
+    service.updateReview(reviewDTO, id);
+    return new ResponseEntity(HttpStatus.I_AM_A_TEAPOT);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity deleteByID(@PathVariable long id){
+    service.deleteById(id);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
