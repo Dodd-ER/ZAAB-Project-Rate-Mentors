@@ -6,7 +6,8 @@ import com.fedex.feedbackfrog.model.entity.User;
 public class ReviewDTO {
   public String text;
   public boolean isAnonym;
-  public enum rating {
+  public Rating rating;
+  public enum Rating {
     PLUS,
     MINUS
   }
@@ -43,5 +44,13 @@ public class ReviewDTO {
 
   public void setMentor(Mentor mentor) {
     this.mentor = mentor;
+  }
+
+  public Rating getRating() {
+    return rating;
+  }
+
+  public void setRating(Rating rating) {
+    this.rating = rating;
   }
 }
