@@ -1,5 +1,6 @@
-package com.fedex.feedbackfrog;
+package com.fedex.feedbackfrog.controller;
 
+import com.fedex.feedbackfrog.service.UserServiceImpl;
 import com.fedex.feedbackfrog.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

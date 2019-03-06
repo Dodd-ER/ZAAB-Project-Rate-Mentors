@@ -1,4 +1,4 @@
-package com.fedex.feedbackfrog;
+package com.fedex.feedbackfrog.repository;
 
 import com.fedex.feedbackfrog.model.entity.User;
 import org.springframework.data.repository.CrudRepository;
