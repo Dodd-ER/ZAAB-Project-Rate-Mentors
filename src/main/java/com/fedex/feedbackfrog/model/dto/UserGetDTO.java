@@ -2,7 +2,7 @@ package com.fedex.feedbackfrog.model.dto;
 
 import java.util.List;
 
-public class UserGetDTO extends UserDTO {
+public class UserGetDTO {
   long id;
   public String name;
   public boolean isAdmin;

@@ -55,7 +55,15 @@ public class UserServiceImpl implements UserService {
   public void editUser(long id, UserDTO userDTO) {
     User user = userRepository.findById(id);
     mapper.map(userDTO, user);
-
     userRepository.save(user);
+  }
+
+  private List<UserDTO> convertEntityListToDtoList(List<User> userList) {
+    List<UserDTO> dtoList = new ArrayList<>();
+    for (User user : userList) {
+    UserDTO userDTO = mapper.map(user, UserDTO.class);
+    dtoList.add(userDTO);
+    }
+    return dtoList;
   }
 }
