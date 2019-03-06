@@ -19,13 +19,12 @@ public class SlackMessageService {
     header.set("Authorization", "Bearer xoxp-566386912258-567820057110-568778354018-4283ed3dff60dec56bc44b24116cd16c");
     ObjectMapper mapper = new ObjectMapper();
     SlackMessage message = new SlackMessage("DGPQ41YSJ", Arrays.asList(
-        new Block(new SlackText("*You have a new *rating*: ")),
-        new Block(new SlackText("*ugye slackbottól kapod?*")),
+        new Block(new SlackText("*You have a new rating*: " + getEmoji(dto.rating.toString()))),
         new BlockWithImage(
-            new SlackText("ITT A TUTORIAL: https://www.baeldung.com/jackson-object-mapper-tutorial"),
+            new SlackText(dto.text),
             new Accessory(
-                "http://thetango.net/wp-content/uploads/2016/11/TheTango-ComedyWildlife-1101201608-620x386.png",
-                "happy frog"))
+                getImageUrl(dto.rating.toString()),
+                "frog"))
     ));
     String jsonString = null;
     try {
@@ -36,6 +35,16 @@ public class SlackMessageService {
     HttpEntity<String> entity = new HttpEntity<String>(jsonString, header);
     RestTemplate restTemplate = new RestTemplate();
     restTemplate.exchange("https://slack.com/api/chat.postMessage", HttpMethod.POST, entity, SlackMessage.class);
+  }
+
+  private String getImageUrl(String rating) {
+    return rating.equals("PLUS")
+        ? "https://i.pinimg.com/originals/90/4e/b3/904eb39f6e9536cfc8c205045efe22c6.jpg"
+        : "https://i.redd.it/sywglt58ngg01.jpg";
+  }
+
+  private String getEmoji(String rating) {
+    return rating.equals("PLUS") ? ":thumbsup:" : ":thumbsdown:";
   }
 
 }
