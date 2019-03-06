@@ -42,11 +42,11 @@ public class User {
   }
 
   public boolean isAdmin() {
-    return isAdmin;
+    return this.isAdmin;
   }
 
-  public void setAdmin(boolean admin) {
-    isAdmin = admin;
+  public void setAdmin(boolean isAdmin) {
+    this.isAdmin = isAdmin;
   }
 
   public List<Review> getSentReviews() {
