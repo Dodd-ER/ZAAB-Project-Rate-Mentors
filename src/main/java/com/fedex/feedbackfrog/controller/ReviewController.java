@@ -5,7 +5,6 @@ import com.fedex.feedbackfrog.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +23,12 @@ public class ReviewController {
     return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
   }
 
-  @DeleteMapping("/delete/{id}")
+  @GetMapping
+  public ResponseEntity getAllReviews(){
+    return new ResponseEntity<>(service.getAllDtos(), HttpStatus.OK);
+  }
+
+  @DeleteMapping("/{id}")
   public ResponseEntity deleteByID(@PathVariable long id){
     service.deleteById(id);
     return new ResponseEntity<>(HttpStatus.OK);
@@ -35,5 +39,4 @@ public class ReviewController {
     service.saveReview(reviewDTO);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
-
 }
