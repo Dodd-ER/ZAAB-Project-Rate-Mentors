@@ -1,9 +1,5 @@
 package com.fedex.feedbackfrog.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fedex.feedbackfrog.model.entity.Mentor;
-import com.fedex.feedbackfrog.model.entity.User;
-
 public class ReviewDTO {
   public String text;
   public boolean isAnonym;

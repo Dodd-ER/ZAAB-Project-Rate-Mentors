@@ -1,7 +1,5 @@
 package com.fedex.feedbackfrog.model.dto;
 
-import java.util.List;
-
 public class UserForReviewListDTO {
   public String name;
   public String getName() {
