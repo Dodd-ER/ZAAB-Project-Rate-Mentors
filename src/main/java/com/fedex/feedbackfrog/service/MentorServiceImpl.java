@@ -1,4 +1,7 @@
 package com.fedex.feedbackfrog.service;
 
-public class MentorServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class MentorServiceImpl implements MentorService{
 }
