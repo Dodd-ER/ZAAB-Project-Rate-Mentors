@@ -1,17 +1,10 @@
 package com.fedex.feedbackfrog;
 
-
-
-import com.sun.deploy.net.HttpResponse;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.JsonPath;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @RestController
