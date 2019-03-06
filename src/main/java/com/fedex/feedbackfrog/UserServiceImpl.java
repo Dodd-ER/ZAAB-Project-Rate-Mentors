@@ -12,11 +12,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-  @Autowired
-  UserRepository userRepository;
+  private UserRepository userRepository;
+  private ModelMapper mapper;
 
   @Autowired
-  ModelMapper mapper;
+  public UserServiceImpl(ModelMapper mapper, UserRepository userRepository) {
+    this.userRepository = userRepository;
+    this.mapper = mapper;
+  }
 
   public UserDTO findUserByName(String name) {
     return convertUserToUserDTO(userRepository.findUserByName(name));
@@ -27,11 +30,23 @@ public class UserServiceImpl implements UserService {
   }
 
   public List<UserDTO> findAllUsers() {
-    return mapper.map(userRepository.findAll(), ArrayList.class);
+    List<UserDTO> dtoList = new ArrayList<>();
+    List<User> users = userRepository.findAll();
+    for (User user : users) {
+      dtoList.add(convertUserToUserDTO(user));
+    }
+    return dtoList;
   }
 
   public UserDTO findUserById(long id) {
     return convertUserToUserDTO(userRepository.findById(id));
   }
 
+  public void saveUser(UserDTO userDTO) {
+    userRepository.save(mapper.map(userDTO, User.class));
+  }
+
+  public void deleteUser(long id) {
+    userRepository.deleteById(id);
+  }
 }
