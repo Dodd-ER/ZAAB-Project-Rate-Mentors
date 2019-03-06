@@ -33,7 +33,8 @@ public class UserServiceImpl implements UserService {
     List<UserDTO> dtoList = new ArrayList<>();
     List<User> users = userRepository.findAll();
     for (User user : users) {
-      dtoList.add(convertUserToUserDTO(user));
+      UserDTO userDTO = convertUserToUserDTO(user);
+      dtoList.add(userDTO);
     }
     return dtoList;
   }
@@ -43,10 +44,18 @@ public class UserServiceImpl implements UserService {
   }
 
   public void saveUser(UserDTO userDTO) {
-    userRepository.save(mapper.map(userDTO, User.class));
+    if (userRepository.findUserByName(userDTO.getName()) == null)
+      userRepository.save(mapper.map(userDTO, User.class));
   }
 
   public void deleteUser(long id) {
     userRepository.deleteById(id);
+  }
+
+  public void editUser(long id, UserDTO userDTO) {
+    User user = userRepository.findById(id);
+    mapper.map(userDTO, user);
+
+    userRepository.save(user);
   }
 }

@@ -2,10 +2,19 @@ package com.fedex.feedbackfrog.model.dto;
 
 import java.util.List;
 
-public class UserDTO {
+public class UserGetDTO extends UserDTO {
+  long id;
   public String name;
   public boolean isAdmin;
   public List<ReviewDTO> sentReviews;
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
 
   public String getName() {
     return name;

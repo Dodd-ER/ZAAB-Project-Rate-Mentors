@@ -16,15 +16,14 @@ public class UserController {
     this.userService = userService;
   }
 
-  //get
   @GetMapping("/user")
   public ResponseEntity getUser(@RequestParam(required = false) String name) {
-    if (!name.equals(null)|| !name.equals("")) {
-      return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
-    } return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+    if (name == null) {
+      return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
   }
 
-  //get by id
   @GetMapping ("/user/{id}")
   public ResponseEntity getUserById(@PathVariable long id) {
     return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
@@ -32,17 +31,20 @@ public class UserController {
 
   //post -- to be modified based on google auth
   @PostMapping("/user")
-  public ResponseEntity addNewUser(UserDTO userDTO) {
+  public ResponseEntity addNewUser(@RequestBody UserDTO userDTO) {
     userService.saveUser(userDTO);
     return new ResponseEntity<>("User created", HttpStatus.CREATED);
   }
 
-  //put -- todo
+  @PutMapping ("/user/{id}")
+  public ResponseEntity editUser (@PathVariable long id, @RequestBody UserDTO userDTO) {
+    userService.editUser(id, userDTO);
+    return new ResponseEntity<>("User edited", HttpStatus.OK);
+  }
 
-  //delete
   @DeleteMapping("/user/{id}")
   public ResponseEntity deleteUser(@PathVariable long id) {
     userService.deleteUser(id);
-    return new ResponseEntity(HttpStatus.OK);
+    return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
   }
 }
