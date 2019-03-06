@@ -1,5 +1,7 @@
 package com.fedex.feedbackfrog.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 public class UserDTO {

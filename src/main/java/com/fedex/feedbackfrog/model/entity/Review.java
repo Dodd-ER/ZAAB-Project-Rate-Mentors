@@ -1,5 +1,7 @@
 package com.fedex.feedbackfrog.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity

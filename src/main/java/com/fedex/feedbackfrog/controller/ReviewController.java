@@ -31,10 +31,9 @@ public class ReviewController {
     return new ResponseEntity<>(service.getAllDtos(), HttpStatus.OK);
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity deleteByID(@PathVariable long id){
-    service.deleteById(id);
-    return new ResponseEntity<>(HttpStatus.OK);
+  @GetMapping("/")
+  public ResponseEntity getByKeyword(@RequestParam(value = "text",required = false) String text){
+    return new ResponseEntity(service.getReviewByTextContaining(text), HttpStatus.OK);
   }
 
   @PostMapping
@@ -42,5 +41,11 @@ public class ReviewController {
     service.saveReview(reviewDTO);
     slackMessageService.sendMessage(reviewDTO);
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity deleteByID(@PathVariable long id){
+    service.deleteById(id);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
