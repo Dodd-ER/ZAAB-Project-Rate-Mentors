@@ -5,5 +5,7 @@ import com.fedex.feedbackfrog.model.entity.Mentor;
 import java.util.List;
 
 public interface MentorService {
-  List<Mentor> findAllMentor();
+  List findAllMentor();
+  Mentor findMentorByName(String name);
+  Mentor findMentorById(long id);
 }
