@@ -1,9 +1,7 @@
 package com.fedex.feedbackfrog.model.entity;
 
-import javax.persistence.Entity;
-
-@Entity
 public class GoogleAuthModel {
+
 
   private Long google_alias;
   private String email;

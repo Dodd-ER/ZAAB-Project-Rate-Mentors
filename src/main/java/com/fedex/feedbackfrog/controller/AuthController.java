@@ -1,6 +1,7 @@
 package com.fedex.feedbackfrog.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,4 @@ public class AuthController {
     System.out.println(principal.toString());
     return principal;
   }
-
-
-
 }
