@@ -31,7 +31,7 @@ public class UserController {
 
   @GetMapping("/user/{id}")
   public ResponseEntity getUserById(@PathVariable long id) throws Exception {
-    if (userService.findUserById(id) != null) {
+    if (userService.checkExistenceById(id)) {
       return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
     } else throw new GeneralException("Cannot find user with given ID", HttpStatus.BAD_REQUEST);
   }
@@ -44,14 +44,17 @@ public class UserController {
   }
 
   @PutMapping ("/user/{id}")
-  public ResponseEntity editUser (@PathVariable long id, @RequestBody UserDTO userDTO) {
-    userService.editUser(id, userDTO);
-    return new ResponseEntity<>("User edited", HttpStatus.OK);
+  public ResponseEntity editUser (@PathVariable long id, @RequestBody UserDTO userDTO) throws Exception {
+    if (userService.checkExistenceById(id)) {
+      userService.editUser(id, userDTO);
+      return new ResponseEntity<>("User edited", HttpStatus.OK);
+    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
   }
+
 
   @DeleteMapping("/user/{id}")
   public ResponseEntity deleteUser(@PathVariable long id) throws Exception {
-    if (userService.findUserById(id) != null) {
+    if (userService.checkExistenceById(id)) {
       userService.deleteUser(id);
       return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     } else throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
