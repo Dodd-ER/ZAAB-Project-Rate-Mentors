@@ -1,6 +1,7 @@
 package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
+import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
 import com.fedex.feedbackfrog.model.entity.Review;
 import com.fedex.feedbackfrog.repository.MentorRepository;
 import com.fedex.feedbackfrog.repository.ReviewRepository;
@@ -28,7 +29,7 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public void saveReview(ReviewDTO reviewDTO) {
+  public void saveReview(ReviewDTO_Post reviewDTO) {
     if (reviewDTO != null){
       Review review = mapper.map(reviewDTO, Review.class);
       review.setReviewer(userRepository.findUserByName(reviewDTO.getReviewer().getName()));
@@ -52,11 +53,13 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   public ReviewDTO getById(long id) {
-    return mapper.map(repository.findById(id), ReviewDTO.class);
+    return mapper.map(repository.findById(id).orElse(null), ReviewDTO.class);
   }
 
   @Override
   public void deleteById(long id) {
+    repository.findById(id).get().setMentor(null);
+    repository.findById(id).get().setReviewer(null);
     repository.deleteById(id);
   }
 
@@ -75,5 +78,15 @@ public class ReviewServiceImpl implements ReviewService {
     Review review = repository.findById(id).orElse(null);
     mapper.map(reviewDTO, review);
     repository.save(review);
+  }
+
+  @Override
+  public boolean existsById(long id) {
+    return repository.existsById(id);
+  }
+
+  @Override
+  public boolean existsByText(String text) {
+    return repository.existsByTextContaining(text);
   }
 }

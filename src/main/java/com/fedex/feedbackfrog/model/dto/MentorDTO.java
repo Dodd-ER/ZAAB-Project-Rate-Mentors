@@ -6,6 +6,15 @@ public class MentorDTO {
   String name;
   int points;
   List<ReviewDTO> receivedReviews;
+  String slackAlias;
+
+  public String getSlackAlias() {
+    return slackAlias;
+  }
+
+  public void setSlackAlias(String slackAlias) {
+    this.slackAlias = slackAlias;
+  }
 
   public String getName() {
     return name;

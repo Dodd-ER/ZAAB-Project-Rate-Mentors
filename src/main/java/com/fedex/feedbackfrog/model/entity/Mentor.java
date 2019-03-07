@@ -13,6 +13,7 @@ public class Mentor {
   private long id;
   private String name;
   private int points;
+  private String slackAlias;
 
   @OneToMany(mappedBy = "mentor")
   private List<Review> receivedReviews;
@@ -28,6 +29,14 @@ public class Mentor {
     this.name = name;
     this.points = points;
     this.receivedReviews = receivedReviews;
+  }
+
+  public String getSlackAlias() {
+    return slackAlias;
+  }
+
+  public void setSlackAlias(String slackAlias) {
+    this.slackAlias = slackAlias;
   }
 
   public long getId() {

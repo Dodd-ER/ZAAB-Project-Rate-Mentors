@@ -1,6 +1,8 @@
 package com.fedex.feedbackfrog.controller;
 
+import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
+import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
 import com.fedex.feedbackfrog.service.ReviewService;
 import com.fedex.feedbackfrog.service.SlackMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +24,23 @@ public class ReviewController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity getReviewsById(@PathVariable long id){
-    return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+  public ResponseEntity getReviewsById(@PathVariable long id) throws GeneralException {
+    if (service.existsById(id)){
+      return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    } else throw new GeneralException("Cannot find review with given ID", HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping
-  public ResponseEntity getAllReviews(){
-    return new ResponseEntity<>(service.getAllDtos(), HttpStatus.OK);
-  }
-
-  @GetMapping("/")
-  public ResponseEntity getByKeyword(@RequestParam(value = "text",required = false) String text){
-    return new ResponseEntity<>(service.getReviewByTextContaining(text), HttpStatus.OK);
+  public ResponseEntity getReviews(@RequestParam(value = "text",required = false) String text) throws GeneralException {
+    if (text == null || text.isEmpty()){
+      return new ResponseEntity<>(service.getAllDtos(), HttpStatus.OK);
+    } else if (service.existsByText(text)){
+      return new ResponseEntity<>(service.getReviewByTextContaining(text), HttpStatus.OK);
+    } throw new GeneralException("Review(s) not found", HttpStatus.NOT_FOUND);
   }
 
   @PostMapping
-  public ResponseEntity saveReview(@RequestBody ReviewDTO reviewDTO){
+  public ResponseEntity saveReview(@RequestBody ReviewDTO_Post reviewDTO){
     service.saveReview(reviewDTO);
     slackMessageService.sendMessage(reviewDTO);
     return new ResponseEntity<>(HttpStatus.CREATED);
@@ -50,8 +53,11 @@ public class ReviewController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity deleteByID(@PathVariable long id){
-    service.deleteById(id);
-    return new ResponseEntity<>(HttpStatus.OK);
+  public ResponseEntity deleteByID(@PathVariable long id) throws GeneralException {
+    if (service.existsById(id)){
+      service.deleteById(id);
+      return new ResponseEntity<>("Review successfully deleted", HttpStatus.OK);
+    } else throw new GeneralException("No such review", HttpStatus.BAD_REQUEST);
+
   }
 }
