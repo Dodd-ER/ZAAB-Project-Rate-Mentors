@@ -2,8 +2,12 @@ package com.fedex.feedbackfrog.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fedex.feedbackfrog.exception.ErrorMessage;
+import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.SlackMessageModels.*;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
+import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,13 +16,16 @@ import java.util.Arrays;
 
 @Service
 public class SlackMessageService {
-  public void sendMessage(ReviewDTO dto){
+  @Value("${SLACKTOKEN}")
+  private String slackToken;
+
+  public void sendMessage(ReviewDTO_Post dto) throws GeneralException {
     HttpHeaders header = new HttpHeaders();
     header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     header.setContentType(MediaType.APPLICATION_JSON);
-    header.set("Authorization", "Bearer xoxp-566386912258-567820057110-568778354018-4283ed3dff60dec56bc44b24116cd16c");
+    header.set("Authorization", "Bearer " + slackToken);
     ObjectMapper mapper = new ObjectMapper();
-    SlackMessage message = new SlackMessage("DGPQ41YSJ", Arrays.asList(
+    SlackMessage message = new SlackMessage(dto.mentor.slackAlias, Arrays.asList(
         new Block(new SlackText("*You have a new rating*: " + getEmoji(dto.rating.toString()))),
         new BlockWithImage(
             new SlackText(dto.text),
@@ -30,7 +37,7 @@ public class SlackMessageService {
     try {
       jsonString = mapper.writeValueAsString(message);
     } catch (JsonProcessingException e) {
-      e.printStackTrace();
+      throw new GeneralException(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     HttpEntity<String> entity = new HttpEntity<String>(jsonString, header);
     RestTemplate restTemplate = new RestTemplate();

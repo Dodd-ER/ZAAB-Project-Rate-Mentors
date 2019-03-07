@@ -22,7 +22,7 @@ public class UserController {
   public ResponseEntity getUser(@RequestParam(required = false) String name) throws Exception {
     if (name == null) {
       return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
-    } else if (userService.findUserByName(name) != null) {
+    } else if (userService.checkExistenceByName(name)) {
       return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
     } else {
       throw new GeneralException("User list is empty", HttpStatus.NOT_FOUND);
