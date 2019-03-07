@@ -60,7 +60,7 @@ public class Mentor {
   }
 
   public void setPoints(int points) {
-    this.points = points;
+    this.points += points;
   }
 
   public List<Review> getReceivedReviews() {

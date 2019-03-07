@@ -34,6 +34,7 @@ public class ReviewServiceImpl implements ReviewService {
       Review review = mapper.map(reviewDTO, Review.class);
       review.setReviewer(userRepository.findUserByName(reviewDTO.getReviewer().getName()));
       review.setMentor(mentorRepository.findByName(reviewDTO.getMentor().getName()));
+      review.getMentor().setPoints(reviewDTO.rating.toString().equals("PLus") ? 1 : -1);
       repository.save(review);
     }
   }
