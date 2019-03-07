@@ -19,6 +19,11 @@ public class Mentor {
 
   public Mentor () {}
 
+  public Mentor(String name, int points) {
+    this.name = name;
+    this.points = points;
+  }
+
   public Mentor(String name, int points, List<Review> receivedReviews) {
     this.name = name;
     this.points = points;
