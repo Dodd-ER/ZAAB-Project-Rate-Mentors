@@ -1,4 +1,4 @@
-package com.fedex.feedbackfrog;
+package com.fedex.feedbackfrog.controller;
 
 
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

@@ -2,10 +2,10 @@ package com.fedex.feedbackfrog.model.entity;
 
 import javax.persistence.Entity;
 
-
+@Entity
 public class GoogleAuthModel {
 
-  private Long id;
+  private Long google_alias;
   private String email;
   private boolean verified_email;
   private String given_name;
@@ -14,8 +14,8 @@ public class GoogleAuthModel {
   private String gender;
   private String locale;
 
-  public GoogleAuthModel(Long id, String email, boolean verified_email, String given_name, String family_name, String name, String gender, String locale) {
-    this.id = id;
+  public GoogleAuthModel(Long google_alias, String email, boolean verified_email, String given_name, String family_name, String name, String gender, String locale) {
+    this.google_alias = google_alias;
     this.email = email;
     this.verified_email = verified_email;
     this.given_name = given_name;
@@ -29,11 +29,11 @@ public class GoogleAuthModel {
   }
 
   public Long getId() {
-    return id;
+    return google_alias;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setId(Long google_alias) {
+    this.google_alias = google_alias;
   }
 
   public String getEmail() {
