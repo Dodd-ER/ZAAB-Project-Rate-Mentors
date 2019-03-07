@@ -7,6 +7,7 @@ import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.SlackMessageModels.*;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,11 +16,14 @@ import java.util.Arrays;
 
 @Service
 public class SlackMessageService {
+  @Value("${SLACKTOKEN}")
+  private String slackToken;
+
   public void sendMessage(ReviewDTO_Post dto) throws GeneralException {
     HttpHeaders header = new HttpHeaders();
     header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     header.setContentType(MediaType.APPLICATION_JSON);
-    header.set("Authorization", "Bearer xoxp-566386912258-567820057110-569584878099-0569bdc5b50540e76ba45967f0461c86");
+    header.set("Authorization", "Bearer " + slackToken);
     ObjectMapper mapper = new ObjectMapper();
     SlackMessage message = new SlackMessage(dto.mentor.slackAlias, Arrays.asList(
         new Block(new SlackText("*You have a new rating*: " + getEmoji(dto.rating.toString()))),
