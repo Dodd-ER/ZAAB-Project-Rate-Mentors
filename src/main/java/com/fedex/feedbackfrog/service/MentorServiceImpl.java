@@ -52,4 +52,14 @@ public class MentorServiceImpl implements MentorService{
   public void deleteMentorById(long id) {
     this.mentorRepository.deleteById(id);
   }
+
+  @Override
+  public boolean isMentorExistsByName(String name) {
+    return this.mentorRepository.existsByName(name);
+  }
+
+  @Override
+  public boolean isMentorExistsById(long id) {
+    return this.mentorRepository.existsById(id);
+  }
 }

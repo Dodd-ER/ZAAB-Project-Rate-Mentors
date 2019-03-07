@@ -16,6 +16,11 @@ public class MentorDTO {
     this.slackAlias = slackAlias;
   }
 
+  public MentorDTO(String name, int points) {
+    this.name = name;
+    this.points = points;
+  }
+
   public String getName() {
     return name;
   }
