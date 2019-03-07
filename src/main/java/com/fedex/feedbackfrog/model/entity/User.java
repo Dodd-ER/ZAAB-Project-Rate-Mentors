@@ -10,9 +10,10 @@ public class User {
   private long id;
   private String name;
   private boolean isAdmin;
-
   @OneToMany(mappedBy = "reviewer")
   private List<Review> sentReviews;
+  private String emailAddress;
+
 
   public User() {}
 
@@ -20,6 +21,13 @@ public class User {
     this.name = name;
     this.isAdmin = isAdmin;
     this.sentReviews = sentReviews;
+  }
+
+  public User(String name, boolean isAdmin, List<Review> sentReviews, String email) {
+    this.name = name;
+    this.isAdmin = isAdmin;
+    this.sentReviews = sentReviews;
+    this.emailAddress = email;
   }
 
   public long getId() {
@@ -52,5 +60,13 @@ public class User {
 
   public void setSentReviews(List<Review> sentReviews) {
     this.sentReviews = sentReviews;
+  }
+
+  public String getEmailAddress() {
+    return emailAddress;
+  }
+
+  public void setEmailAddress(String emailAddress) {
+    this.emailAddress = emailAddress;
   }
 }
