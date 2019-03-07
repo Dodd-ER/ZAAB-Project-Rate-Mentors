@@ -8,6 +8,16 @@ public class MentorDTO {
   List<ReviewDTO> receivedReviews;
   String slackAlias;
 
+  public MentorDTO() {
+  }
+
+  public MentorDTO(String name, int points, List<ReviewDTO> receivedReviews, String slackAlias) {
+    this.name = name;
+    this.points = points;
+    this.receivedReviews = receivedReviews;
+    this.slackAlias = slackAlias;
+  }
+
   public String getSlackAlias() {
     return slackAlias;
   }

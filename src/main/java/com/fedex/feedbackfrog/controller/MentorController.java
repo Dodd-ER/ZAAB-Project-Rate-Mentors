@@ -20,7 +20,7 @@ public class MentorController {
 
   @GetMapping("/mentor/{id}")
   public ResponseEntity getMentorById(@PathVariable(value = "id") long id) throws Exception {
-    if (this.mentorService.findMentorById(id) != null) {
+    if (this.mentorService.isMentorExistsById(id)) {
       return new ResponseEntity<>(this.mentorService.findMentorById(id), HttpStatus.OK);
     } else {
       throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
