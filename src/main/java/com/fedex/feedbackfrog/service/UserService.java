@@ -1,6 +1,7 @@
 package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.UserDTO;
+import com.fedex.feedbackfrog.model.entity.User;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface UserService {
 
   void editUser(long id, UserDTO userDTO);
 
+  void saveUser(User user);
+
+  User setUserField(String id, String name, String emailAddress);
 }

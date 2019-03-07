@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
   private UserRepository userRepository;
   private ModelMapper mapper;
   private ReviewRepository reviewRepository;
+  private User user;
 
   @Autowired
   public UserServiceImpl(ModelMapper mapper, UserRepository userRepository, ReviewRepository reviewRepository) {
@@ -64,6 +65,19 @@ public class UserServiceImpl implements UserService {
     User user = userRepository.findById(id);
     mapper.map(userDTO, user);
     userRepository.save(user);
+  }
+
+  @Override
+  public void saveUser(User user) {
+    userRepository.save(user);
+  }
+
+  @Override
+  public User setUserField(String id, String name, String emailAddress) {
+    user.setGoogleAlias(id);
+    user.setName(name);
+    user.setEmailAddress(emailAddress);
+    return user;
   }
 
   private List<UserDTO> convertEntityListToDtoList(List<User> userList) {
