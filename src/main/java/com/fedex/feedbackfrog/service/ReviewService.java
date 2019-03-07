@@ -12,4 +12,6 @@ public interface ReviewService {
   void deleteById(long id);
   List<ReviewDTO> getReviewByTextContaining(String text);
   void updateReview(ReviewDTO reviewDTO, long id);
+  boolean existsById(long id);
+  boolean existsByText(String text);
 }

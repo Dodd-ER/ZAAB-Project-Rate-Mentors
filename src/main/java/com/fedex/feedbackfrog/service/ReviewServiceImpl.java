@@ -53,11 +53,13 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   public ReviewDTO getById(long id) {
-    return mapper.map(repository.findById(id), ReviewDTO.class);
+    return mapper.map(repository.findById(id).orElse(null), ReviewDTO.class);
   }
 
   @Override
   public void deleteById(long id) {
+    repository.findById(id).get().setMentor(null);
+    repository.findById(id).get().setReviewer(null);
     repository.deleteById(id);
   }
 
@@ -76,5 +78,15 @@ public class ReviewServiceImpl implements ReviewService {
     Review review = repository.findById(id).orElse(null);
     mapper.map(reviewDTO, review);
     repository.save(review);
+  }
+
+  @Override
+  public boolean existsById(long id) {
+    return repository.existsById(id);
+  }
+
+  @Override
+  public boolean existsByText(String text) {
+    return repository.existsByTextContaining(text);
   }
 }
