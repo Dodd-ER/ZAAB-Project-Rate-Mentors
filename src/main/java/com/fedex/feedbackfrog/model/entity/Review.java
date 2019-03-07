@@ -9,7 +9,8 @@ public class Review {
   private long id;
   private String text;
   private boolean isAnonym;
-  private enum rating {
+  private Rating rating;
+  private enum Rating {
     PLUS,
     MINUS
   }
@@ -67,5 +68,13 @@ public class Review {
 
   public void setMentor(Mentor mentor) {
     this.mentor = mentor;
+  }
+
+  public Rating getRating() {
+    return rating;
+  }
+
+  public void setRating(Rating rating) {
+    this.rating = rating;
   }
 }
