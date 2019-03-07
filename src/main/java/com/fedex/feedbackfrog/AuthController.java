@@ -16,7 +16,6 @@ public class AuthController {
     asd = (LinkedHashMap) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
     System.out.println(asd);
     System.out.println(principal.toString());
-
     return principal;
   }
 
