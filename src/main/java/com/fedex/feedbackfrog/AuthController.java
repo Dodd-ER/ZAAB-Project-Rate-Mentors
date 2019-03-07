@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 @RestController
 public class AuthController {
 
-  @RequestMapping(value="/user")
+  @RequestMapping(value="/detail")
   public Principal user(Principal principal) {
     LinkedHashMap asd;
     asd = (LinkedHashMap) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
