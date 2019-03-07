@@ -19,7 +19,7 @@ public class SlackMessageService {
     HttpHeaders header = new HttpHeaders();
     header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     header.setContentType(MediaType.APPLICATION_JSON);
-    header.set("Authorization", "Bearer xoxp-566386912258-567820057110-570365609735-9fb45d86c94f849351395c4a027aa562");
+    header.set("Authorization", "Bearer xoxp-566386912258-567820057110-569579141779-0102649be0ef79a0093f4b76f5bd265e");
     ObjectMapper mapper = new ObjectMapper();
     SlackMessage message = new SlackMessage(dto.mentor.slackAlias, Arrays.asList(
         new Block(new SlackText("*You have a new rating*: " + getEmoji(dto.rating.toString()))),
