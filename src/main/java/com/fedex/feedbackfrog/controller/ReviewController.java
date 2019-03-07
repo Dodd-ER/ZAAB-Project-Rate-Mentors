@@ -40,7 +40,7 @@ public class ReviewController {
   }
 
   @PostMapping
-  public ResponseEntity saveReview(@RequestBody ReviewDTO_Post reviewDTO){
+  public ResponseEntity saveReview(@RequestBody ReviewDTO_Post reviewDTO) throws GeneralException{
     service.saveReview(reviewDTO);
     slackMessageService.sendMessage(reviewDTO);
     return new ResponseEntity<>(HttpStatus.CREATED);

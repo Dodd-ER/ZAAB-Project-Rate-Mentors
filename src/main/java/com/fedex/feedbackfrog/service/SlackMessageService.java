@@ -2,6 +2,8 @@ package com.fedex.feedbackfrog.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fedex.feedbackfrog.exception.ErrorMessage;
+import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.SlackMessageModels.*;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
@@ -13,7 +15,7 @@ import java.util.Arrays;
 
 @Service
 public class SlackMessageService {
-  public void sendMessage(ReviewDTO_Post dto){
+  public void sendMessage(ReviewDTO_Post dto) throws GeneralException {
     HttpHeaders header = new HttpHeaders();
     header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     header.setContentType(MediaType.APPLICATION_JSON);
@@ -31,7 +33,7 @@ public class SlackMessageService {
     try {
       jsonString = mapper.writeValueAsString(message);
     } catch (JsonProcessingException e) {
-      e.printStackTrace();
+      throw new GeneralException(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     HttpEntity<String> entity = new HttpEntity<String>(jsonString, header);
     RestTemplate restTemplate = new RestTemplate();
