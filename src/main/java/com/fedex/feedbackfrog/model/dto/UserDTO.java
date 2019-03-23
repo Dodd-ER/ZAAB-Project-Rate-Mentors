@@ -6,6 +6,7 @@ public class UserDTO {
   public String name;
   public boolean isAdmin;
   public List<ReviewDTO> sentReviews;
+
   public String getName() {
     return name;
   }
