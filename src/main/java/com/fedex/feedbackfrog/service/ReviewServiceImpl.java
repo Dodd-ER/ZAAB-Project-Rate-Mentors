@@ -82,7 +82,7 @@ public class ReviewServiceImpl implements CreateService<ReviewDTO_Post>,
   }
 
   @Override
-  public void editById(long id, ReviewDTO dto) {
+  public void updateById(long id, ReviewDTO dto) {
     Review review = repository.findById(id).orElse(null);
     mapper.map(dto, review);
     repository.save(review);

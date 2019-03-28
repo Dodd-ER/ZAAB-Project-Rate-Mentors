@@ -4,6 +4,7 @@ import com.fedex.feedbackfrog.model.dto.UserDTO;
 import com.fedex.feedbackfrog.model.entity.User;
 import com.fedex.feedbackfrog.repository.ReviewRepository;
 import com.fedex.feedbackfrog.repository.UserRepository;
+import com.fedex.feedbackfrog.service.serviceInterface.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements CrudService<UserDTO> {
 
   private UserRepository userRepository;
   private ModelMapper mapper;
@@ -25,15 +26,35 @@ public class UserServiceImpl implements UserService {
     this.reviewRepository = reviewRepository;
   }
 
-  public UserDTO findUserByName(String name) {
-    return convertUserToUserDTO(userRepository.findUserByName(name));
-  }
-
   private UserDTO convertUserToUserDTO (User user) {
     return mapper.map(user, UserDTO.class);
   }
 
-  public List<UserDTO> findAllUsers() {
+  private List<UserDTO> convertEntityListToDtoList(List<User> userList) {
+    List<UserDTO> dtoList = new ArrayList<>();
+    for (User user : userList) {
+      UserDTO userDTO = mapper.map(user, UserDTO.class);
+      dtoList.add(userDTO);
+    }
+    return dtoList;
+  }
+
+  @Override
+  public void save(UserDTO dto) {
+    if (userRepository.findUserByName(dto.getName()) == null)
+      userRepository.save(mapper.map(dto, User.class));
+  }
+
+  @Override
+  public void deleteById(long id) {
+    User deletedUser = new User();
+    deletedUser.setName("deleted user");
+    userRepository.findById(id).getSentReviews().forEach(review -> review.setReviewer(deletedUser));
+    userRepository.deleteById(id);
+  }
+
+  @Override
+  public List<UserDTO> getAll() {
     List<UserDTO> dtoList = new ArrayList<>();
     List<User> users = userRepository.findAll();
     for (User user : users) {
@@ -43,42 +64,40 @@ public class UserServiceImpl implements UserService {
     return dtoList;
   }
 
-  public UserDTO findUserById(long id) {
+  @Override
+  public UserDTO getByName(String name) {
+    return convertUserToUserDTO(userRepository.findUserByName(name));
+  }
+
+  @Override
+  public UserDTO getById(long id) {
     return convertUserToUserDTO(userRepository.findById(id));
   }
 
-  public void saveUser(UserDTO userDTO) {
-    if (userRepository.findUserByName(userDTO.getName()) == null)
-      userRepository.save(mapper.map(userDTO, User.class));
+  @Override
+  public boolean existsByName(String name) {
+    return userRepository.existsByName(name);
   }
 
-  public void deleteUser(long id) {
-    User deletedUser = new User();
-    deletedUser.setName("deleted user");
-    userRepository.findById(id).getSentReviews().forEach(review -> review.setReviewer(deletedUser));
-    userRepository.deleteById(id);
-  }
-
-  public void editUser(long id, UserDTO userDTO) {
-    User user = userRepository.findById(id);
-    mapper.map(userDTO, user);
-    userRepository.save(user);
-  }
-
-  private List<UserDTO> convertEntityListToDtoList(List<User> userList) {
-    List<UserDTO> dtoList = new ArrayList<>();
-    for (User user : userList) {
-    UserDTO userDTO = mapper.map(user, UserDTO.class);
-    dtoList.add(userDTO);
-    }
-    return dtoList;
-  }
-
-  public boolean checkExistenceById(long id) {
+  @Override
+  public boolean existsById(long id) {
     return userRepository.existsById(id);
   }
 
-  public boolean checkExistenceByName(String name) {
-    return userRepository.existsByName(name);
+  @Override
+  public void updateById(long id, UserDTO dto) {
+    User user = userRepository.findById(id);
+    mapper.map(dto, user);
+    userRepository.save(user);
+  }
+
+  @Override
+  public boolean existsByText(String text) {
+    return false;
+  }
+
+  @Override
+  public List<UserDTO> getByTextContaining(String text) {
+    return null;
   }
 }

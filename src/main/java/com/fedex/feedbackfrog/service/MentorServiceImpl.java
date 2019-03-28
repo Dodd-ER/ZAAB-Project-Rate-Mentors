@@ -70,7 +70,7 @@ public class MentorServiceImpl implements CrudService<MentorDTO> {
   }
 
   @Override
-  public void editById(long id, MentorDTO dto) {
+  public void updateById(long id, MentorDTO dto) {
 
   }
 

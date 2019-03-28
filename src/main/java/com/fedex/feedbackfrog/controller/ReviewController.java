@@ -3,7 +3,6 @@ package com.fedex.feedbackfrog.controller;
 import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
-import com.fedex.feedbackfrog.service.ReviewService;
 import com.fedex.feedbackfrog.service.SlackMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
