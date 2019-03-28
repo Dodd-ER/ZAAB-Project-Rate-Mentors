@@ -42,7 +42,7 @@ public class MentorController {
   public ResponseEntity createNewMentor(@RequestBody MentorDTO mentorDTO) throws Exception {
     if (!mentorService.existsByName(mentorDTO.getName())) {
       mentorService.save(mentorDTO);
-      return new ResponseEntity<>("Mentor created", HttpStatus.OK);
+      return new ResponseEntity<>("Mentor created", HttpStatus.CREATED);
     } else {
       throw new GeneralException("Name already exists in the database", HttpStatus.BAD_REQUEST);
     }
