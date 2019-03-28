@@ -7,6 +7,7 @@ CREATE TABLE user (
   name VARCHAR(255) NOT NULL,
   is_admin BIT (1) NOT NULL,
   email_address VARCHAR(255) NOT NULL,
+  img_url VARCHAR (255) NOT NULL
 );
 
 CREATE TABLE mentor (

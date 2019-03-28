@@ -1,7 +1,7 @@
-INSERT INTO user(id, name, is_admin, email_address) VALUES
-  (1, 'Bea', TRUE, 'bea@gmail.com'),
-  (2, 'Adel', FALSE, 'adel@gmail.com'),
-  (3, 'Andor',FALSE, 'andor@gmail.com');
+INSERT INTO user(id, name, is_admin, email_address, img_URL) VALUES
+  (1, 'Bea', TRUE, 'bea@gmail.com', 'img.jpg'),
+  (2, 'Adel', FALSE, 'adel@gmail.com', 'img.jpg'),
+  (3, 'Andor',FALSE, 'andor@gmail.com', 'img.jpg');
 
 INSERT INTO mentor(id, name, points, slack_alias, image) VALUES
   (1, 'Ikarasz', '100', 'Ika', 'image'),
