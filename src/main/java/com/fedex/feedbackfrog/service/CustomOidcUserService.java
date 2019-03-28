@@ -41,5 +41,8 @@ public class CustomOidcUserService extends OidcUserService {
       user = new User();
     }
     user.setEmailAddress(userInfoDTO.getEmail());
+    user.setName(userInfoDTO.getName());
+
+    userRepository.save(user);
   }
 }
