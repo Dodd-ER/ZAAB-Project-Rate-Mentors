@@ -30,6 +30,12 @@ public class User {
     this.emailAddress = email;
   }
 
+  public User(String name, boolean isAdmin, String emailAddress) {
+    this.name = name;
+    this.isAdmin = isAdmin;
+    this.emailAddress = emailAddress;
+  }
+
   public long getId() {
     return id;
   }

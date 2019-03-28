@@ -11,6 +11,7 @@ public class Mentor {
   private String name;
   private int points;
   private String slackAlias;
+  private String image;
 
   @OneToMany(mappedBy = "mentor")
   private List<Review> receivedReviews;
@@ -66,5 +67,13 @@ public class Mentor {
 
   public void setReceivedReviews(List<Review> receivedReviews) {
     this.receivedReviews = receivedReviews;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 }
