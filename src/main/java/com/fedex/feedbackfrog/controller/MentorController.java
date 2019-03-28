@@ -31,7 +31,7 @@ public class MentorController {
   public ResponseEntity getMentor(@RequestParam(required = false) String name) throws Exception {
     if (name == null || name.contentEquals("")) {
       return new ResponseEntity<>(this.mentorService.findAllMentor(), HttpStatus.OK);
-    } else if (this.mentorService.findMentorByName(name) != null) {
+    } else if (this.mentorService.isMentorExistsByName(name)) {
       return new ResponseEntity<>(this.mentorService.findMentorByName(name), HttpStatus.OK);
     } else {
       throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
@@ -42,7 +42,7 @@ public class MentorController {
   public ResponseEntity createNewMentor(@RequestBody MentorDTO mentorDTO) throws Exception {
     if (!this.mentorService.isMentorExistsByName(mentorDTO.getName())) {
       this.mentorService.saveNewMentor(mentorDTO);
-      return new ResponseEntity<>("Mentor created", HttpStatus.OK);
+      return new ResponseEntity<>("Mentor created", HttpStatus.CREATED);
     } else {
       throw new GeneralException("Name already exists in the database", HttpStatus.BAD_REQUEST);
     }
