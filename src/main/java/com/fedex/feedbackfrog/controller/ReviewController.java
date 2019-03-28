@@ -34,7 +34,7 @@ public class ReviewController {
   public ResponseEntity getReviews(@RequestParam(value = "text",required = false) String text) throws GeneralException {
     if (text == null || text.isEmpty()){
       return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
-    } else if (service.existsByText(text)){
+    } else if (service.existsByContainingText(text)){
       return new ResponseEntity<>(service.getByTextContaining(text), HttpStatus.OK);
     } throw new GeneralException("Review(s) not found", HttpStatus.NOT_FOUND);
   }

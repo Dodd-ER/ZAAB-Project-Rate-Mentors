@@ -10,4 +10,5 @@ import java.util.List;
 public interface ReviewRepository extends CrudRepository<Review, Long> {
   List<Review> getByTextContaining(String text);
   boolean existsByTextContaining(String text);
+  List<Review> findAll();
 }

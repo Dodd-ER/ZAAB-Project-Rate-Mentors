@@ -15,67 +15,60 @@ import java.util.List;
 public class MentorServiceImpl implements CrudService<MentorDTO> {
 
   private MentorRepository mentorRepository;
-  private ModelMapper modelMapper;
+  private ModelMapper mapper;
 
   @Autowired
   public MentorServiceImpl(MentorRepository mentorRepository, ModelMapper modelMapper) {
     this.mentorRepository = mentorRepository;
-    this.modelMapper = modelMapper;
+    this.mapper = modelMapper;
   }
 
   @Override
   public void save(MentorDTO dto) {
-    this.mentorRepository.save(modelMapper.map(dto, Mentor.class));
-  }
-
-  @Override
-  public void deleteById(long id) {
-    this.mentorRepository.deleteById(id);
+    if (!mentorRepository.existsByName(dto.getName())){
+      mentorRepository.save(mapper.map(dto, Mentor.class));
+    }
   }
 
   @Override
   public List<MentorDTO> getAll() {
     List<MentorDTO> mentorDTOs = new ArrayList<>();
-    List<Mentor> mentors = this.mentorRepository.findAll();
+    List<Mentor> mentors = mentorRepository.findAll();
+
     for (Mentor mentor : mentors) {
-      MentorDTO mentorDTO = modelMapper.map(mentor, MentorDTO.class);
-      mentorDTOs.add(mentorDTO);
+      mentorDTOs.add(mapper.map(mentor, MentorDTO.class));
     }
+
     return mentorDTOs;
   }
 
   @Override
-  public List<MentorDTO> getByTextContaining(String text) {
-    return null;
-  }
-
-  @Override
-  public MentorDTO getByName(String name) {
-    return modelMapper.map(this.mentorRepository.findByName(name), MentorDTO.class);
-  }
-
-  @Override
   public MentorDTO getById(long id) {
-    return modelMapper.map(this.mentorRepository.findById(id), MentorDTO.class);
-  }
-
-  @Override
-  public boolean existsByName(String name) {
-    return this.mentorRepository.existsByName(name);
-  }
-
-  @Override
-  public boolean existsById(long id) {
-    return this.mentorRepository.existsById(id);
+    return mapper.map(mentorRepository.findById(id), MentorDTO.class);
   }
 
   @Override
   public void updateById(long id, MentorDTO dto) {
-
+    Mentor mentor = mentorRepository.findById(id);
+    mapper.map(dto, mentor);
+    mentorRepository.save(mentor);
   }
 
   @Override
-  public boolean existsByText(String text) {
-    return false;
+  public void deleteById(long id) {
+    mentorRepository.deleteById(id);
+  }
+
+  @Override
+  public boolean existsById(long id) {
+    return mentorRepository.existsById(id);
+  }
+
+  public MentorDTO getByName(String name) {
+    return mapper.map(mentorRepository.findByName(name), MentorDTO.class);
+  }
+
+  public boolean existsByName(String name) {
+    return mentorRepository.existsByName(name);
   }
 }
