@@ -16,4 +16,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
   void deleteById(long id);
 
   boolean existsByName(String name);
+
+  User findByEmailAddress(String email);
+
+  boolean existsByEmailAddress(String email);
 }
