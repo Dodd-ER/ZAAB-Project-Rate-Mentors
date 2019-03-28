@@ -16,8 +16,9 @@ CREATE TABLE mentor (
 
 CREATE TABLE review (
   id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  is_anonym BIT(1) NOT NULL,
   text VARCHAR(255) NOT NULL,
+  is_anonym BIT(1) NOT NULL,
+  rating ENUM('PLUS', 'MINUS') NOT NULL,
   mentor_id BIGINT,
   reviewer_id BIGINT,
   FOREIGN KEY (mentor_id) REFERENCES mentor(id),

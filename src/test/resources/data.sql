@@ -8,7 +8,7 @@ INSERT INTO mentor(id, name, points) VALUES
   (2, 'Blanka', '100'),
   (3, 'Gabor', '100');
 
-INSERT INTO review(id, is_anonym, text, mentor_id, reviewer_id) VALUES
-  (1, FALSE, 'Like your face!', 1, 2),
-  (2, FALSE, 'Like your enthusiasm!', 2, 1),
-  (3, FALSE, 'Like your keyboard!', 3, 3);
+INSERT INTO review(id, text, is_anonym, rating, mentor_id, reviewer_id) VALUES
+  (1, 'Like your face!', FALSE, 'PLUS', 1, 2),
+  (2, 'Like your enthusiasm!', FALSE, 'PLUS', 2, 1),
+  (3, 'Like your keyboard!', FALSE, 'PLUS', 3, 3);

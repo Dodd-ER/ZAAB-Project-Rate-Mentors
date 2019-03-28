@@ -7,6 +7,14 @@ public class MentorDTO {
   int points;
   List<ReviewDTO> receivedReviews;
 
+  public MentorDTO() {
+  }
+
+  public MentorDTO(String name, int points) {
+    this.name = name;
+    this.points = points;
+  }
+
   public String getName() {
     return name;
   }
