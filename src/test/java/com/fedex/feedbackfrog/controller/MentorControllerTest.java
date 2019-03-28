@@ -62,5 +62,6 @@ public class MentorControllerTest {
         .andExpect(jsonPath("$[2].slackAlias", is("Gab")))
         .andDo(print())
         .andReturn();
+
   }
 }
