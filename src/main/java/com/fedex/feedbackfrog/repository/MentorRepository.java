@@ -14,5 +14,4 @@ public interface MentorRepository extends CrudRepository<Mentor, Long> {
   Mentor findById(long id);
   List<Mentor> findByNameContaining(String text);
   boolean existsByName(String name);
-  boolean existsByNameContainingOrReceivedReviewsContaining(String text);
 }

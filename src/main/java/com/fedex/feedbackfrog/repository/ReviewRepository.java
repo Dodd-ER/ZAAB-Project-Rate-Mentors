@@ -11,4 +11,5 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
   List<Review> getByTextContaining(String text);
   boolean existsByTextContaining(String text);
   List<Review> findAll();
+  Review findById(long id);
 }

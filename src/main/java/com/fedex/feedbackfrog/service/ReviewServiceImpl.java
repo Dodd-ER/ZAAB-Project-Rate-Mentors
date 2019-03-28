@@ -67,15 +67,15 @@ public class ReviewServiceImpl implements CreateService<ReviewDTO_Post>,
 
   @Override
   public void updateById(long id, ReviewDTO dto) {
-    Review review = reviewRepository.findById(id).orElse(null);
+    Review review = reviewRepository.findById(id);
     mapper.map(dto, review);
     reviewRepository.save(review);
   }
 
   @Override
   public void deleteById(long id) {
-    reviewRepository.findById(id).get().setMentor(null);
-    reviewRepository.findById(id).get().setReviewer(null);
+    reviewRepository.findById(id).setMentor(null);
+    reviewRepository.findById(id).setReviewer(null);
     reviewRepository.deleteById(id);
   }
 
