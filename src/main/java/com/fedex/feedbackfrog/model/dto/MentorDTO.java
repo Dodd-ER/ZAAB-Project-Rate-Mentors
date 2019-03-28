@@ -7,8 +7,14 @@ public class MentorDTO {
   int points;
   List<ReviewDTO> receivedReviews;
   String slackAlias;
+  String image;
 
   public MentorDTO() {
+  }
+
+  public MentorDTO(String name, int points) {
+    this.name = name;
+    this.points = points;
   }
 
   public MentorDTO(String name, int points, List<ReviewDTO> receivedReviews, String slackAlias) {
@@ -24,11 +30,6 @@ public class MentorDTO {
 
   public void setSlackAlias(String slackAlias) {
     this.slackAlias = slackAlias;
-  }
-
-  public MentorDTO(String name, int points) {
-    this.name = name;
-    this.points = points;
   }
 
   public String getName() {
@@ -53,5 +54,13 @@ public class MentorDTO {
 
   public void setReceivedReviews(List<ReviewDTO> receivedReviews) {
     this.receivedReviews = receivedReviews;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 }
