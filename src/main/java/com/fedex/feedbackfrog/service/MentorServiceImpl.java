@@ -3,6 +3,7 @@ package com.fedex.feedbackfrog.service;
 import com.fedex.feedbackfrog.model.dto.MentorDTO;
 import com.fedex.feedbackfrog.model.entity.Mentor;
 import com.fedex.feedbackfrog.repository.MentorRepository;
+import com.fedex.feedbackfrog.service.serviceInterface.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,55 +12,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MentorServiceImpl implements MentorService{
+public class MentorServiceImpl implements CrudService<MentorDTO> {
 
   private MentorRepository mentorRepository;
-  private ModelMapper modelMapper;
+  private ModelMapper mapper;
 
   @Autowired
   public MentorServiceImpl(MentorRepository mentorRepository, ModelMapper modelMapper) {
     this.mentorRepository = mentorRepository;
-    this.modelMapper = modelMapper;
+    this.mapper = modelMapper;
   }
 
   @Override
-  public List<MentorDTO> findAllMentor() {
-    List<MentorDTO> mentorDTOs = new ArrayList<>();
-    List<Mentor> mentors = this.mentorRepository.findAll();
-    for (Mentor mentor : mentors) {
-      MentorDTO mentorDTO = modelMapper.map(mentor, MentorDTO.class);
-      mentorDTOs.add(mentorDTO);
+  public void save(MentorDTO dto) {
+    if (!mentorRepository.existsByName(dto.getName())){
+      mentorRepository.save(mapper.map(dto, Mentor.class));
     }
+  }
+
+  @Override
+  public List<MentorDTO> getAll() {
+    List<MentorDTO> mentorDTOs = new ArrayList<>();
+    List<Mentor> mentors = mentorRepository.findAll();
+
+    for (Mentor mentor : mentors) {
+      mentorDTOs.add(mapper.map(mentor, MentorDTO.class));
+    }
+
     return mentorDTOs;
   }
 
   @Override
-  public MentorDTO findMentorByName(String name) {
-    return modelMapper.map(this.mentorRepository.findByName(name), MentorDTO.class);
+  public MentorDTO getById(long id) {
+    return mapper.map(mentorRepository.findById(id), MentorDTO.class);
   }
 
   @Override
-  public MentorDTO findMentorById(long id) {
-    return modelMapper.map(this.mentorRepository.findById(id), MentorDTO.class);
+  public void updateById(long id, MentorDTO dto) {
+    Mentor mentor = mentorRepository.findById(id);
+    mapper.map(dto, mentor);
+    mentorRepository.save(mentor);
   }
 
   @Override
-  public void saveNewMentor(MentorDTO mentorDTO) {
-    this.mentorRepository.save(modelMapper.map(mentorDTO, Mentor.class));
+  public void deleteById(long id) {
+    mentorRepository.deleteById(id);
   }
 
   @Override
-  public void deleteMentorById(long id) {
-    this.mentorRepository.deleteById(id);
+  public boolean existsById(long id) {
+    return mentorRepository.existsById(id);
   }
 
-  @Override
-  public boolean isMentorExistsByName(String name) {
-    return this.mentorRepository.existsByName(name);
+  public MentorDTO getByName(String name) {
+    return mapper.map(mentorRepository.findByName(name), MentorDTO.class);
   }
 
-  @Override
-  public boolean isMentorExistsById(long id) {
-    return this.mentorRepository.existsById(id);
+  public boolean existsByName(String name) {
+    return mentorRepository.existsByName(name);
   }
+
 }
