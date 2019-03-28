@@ -1,10 +1,9 @@
 package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.UserDTO;
-import com.fedex.feedbackfrog.model.entity.Review;
 import com.fedex.feedbackfrog.model.entity.User;
-import com.fedex.feedbackfrog.repository.ReviewRepository;
 import com.fedex.feedbackfrog.repository.UserRepository;
+import com.fedex.feedbackfrog.service.serviceInterface.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,73 +12,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements CrudService<UserDTO> {
 
   private UserRepository userRepository;
   private ModelMapper mapper;
-  private ReviewRepository reviewRepository;
 
   @Autowired
-  public UserServiceImpl(ModelMapper mapper, UserRepository userRepository, ReviewRepository reviewRepository) {
+  public UserServiceImpl(ModelMapper mapper, UserRepository userRepository) {
     this.userRepository = userRepository;
     this.mapper = mapper;
-    this.reviewRepository = reviewRepository;
   }
 
-  public UserDTO findUserByName(String name) {
-    return convertUserToUserDTO(userRepository.findUserByName(name));
+  @Override
+  public void save(UserDTO dto) {
+    if (!userRepository.existsByName(dto.getName())){
+      userRepository.save(mapper.map(dto, User.class));
+    }
   }
 
-  private UserDTO convertUserToUserDTO (User user) {
-    return mapper.map(user, UserDTO.class);
-  }
-
-  public List<UserDTO> findAllUsers() {
+  @Override
+  public List<UserDTO> getAll() {
     List<UserDTO> dtoList = new ArrayList<>();
     List<User> users = userRepository.findAll();
+
     for (User user : users) {
-      UserDTO userDTO = convertUserToUserDTO(user);
-      dtoList.add(userDTO);
+      dtoList.add(mapper.map(user, UserDTO.class));
     }
+
     return dtoList;
   }
 
-  public UserDTO findUserById(long id) {
-    return convertUserToUserDTO(userRepository.findById(id));
+  @Override
+  public UserDTO getById(long id) {
+    return mapper.map(userRepository.findById(id), UserDTO.class);
   }
 
-  public void saveUser(UserDTO userDTO) {
-    if (userRepository.findUserByName(userDTO.getName()) == null)
-      userRepository.save(mapper.map(userDTO, User.class));
-  }
-
-  public void deleteUser(long id) {
-    User deletedUser = new User();
-    deletedUser.setName("deleted user");
-    userRepository.findById(id).getSentReviews().forEach(review -> review.setReviewer(deletedUser));
-    userRepository.deleteById(id);
-  }
-
-  public void editUser(long id, UserDTO userDTO) {
-    User user = userRepository.findById(id);
-    mapper.map(userDTO, user);
-    userRepository.save(user);
-  }
-
-  private List<UserDTO> convertEntityListToDtoList(List<User> userList) {
-    List<UserDTO> dtoList = new ArrayList<>();
-    for (User user : userList) {
-    UserDTO userDTO = mapper.map(user, UserDTO.class);
-    dtoList.add(userDTO);
-    }
-    return dtoList;
-  }
-
-  public boolean checkExistenceById(long id) {
+  @Override
+  public boolean existsById(long id) {
     return userRepository.existsById(id);
   }
 
-  public boolean checkExistenceByName(String name) {
+  @Override
+  public void updateById(long id, UserDTO dto) {
+    User user = userRepository.findById(id);
+    mapper.map(dto, user);
+    userRepository.save(user);
+  }
+
+  @Override
+  public void deleteById(long id) {
+    userRepository.findById(id).getSentReviews().forEach(review -> review.setReviewer(null));
+    userRepository.deleteById(id);
+  }
+
+  public UserDTO getByName(String name) {
+    return mapper.map(userRepository.findUserByName(name), UserDTO.class);
+  }
+
+  public boolean existsByName(String name) {
     return userRepository.existsByName(name);
   }
 }
