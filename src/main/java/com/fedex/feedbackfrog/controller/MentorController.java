@@ -2,7 +2,7 @@ package com.fedex.feedbackfrog.controller;
 
 import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.dto.MentorDTO;
-import com.fedex.feedbackfrog.service.MentorServiceImpl;
+import com.fedex.feedbackfrog.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MentorController {
 
-  private MentorServiceImpl mentorService;
+  private MentorService mentorService;
 
   @Autowired
-  public MentorController(MentorServiceImpl mentorService) {
+  public MentorController(MentorService mentorService) {
     this.mentorService = mentorService;
   }
 
