@@ -58,6 +58,5 @@ public class ReviewController {
       service.deleteById(id);
       return new ResponseEntity<>("Review successfully deleted", HttpStatus.OK);
     } else throw new GeneralException("No such review", HttpStatus.BAD_REQUEST);
-
   }
 }

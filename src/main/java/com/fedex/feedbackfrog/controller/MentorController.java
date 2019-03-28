@@ -20,8 +20,8 @@ public class MentorController {
 
   @GetMapping("/mentor/{id}")
   public ResponseEntity getMentorById(@PathVariable(value = "id") long id) throws Exception {
-    if (this.mentorService.existsById(id)) {
-      return new ResponseEntity<>(this.mentorService.getById(id), HttpStatus.OK);
+    if (mentorService.existsById(id)) {
+      return new ResponseEntity<>(mentorService.getById(id), HttpStatus.OK);
     } else {
       throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
     }
@@ -29,10 +29,10 @@ public class MentorController {
 
   @GetMapping("/mentor")
   public ResponseEntity getMentor(@RequestParam(required = false) String name) throws Exception {
-    if (name == null || name.contentEquals("")) {
-      return new ResponseEntity<>(this.mentorService.getAll(), HttpStatus.OK);
-    } else if (this.mentorService.getByName(name) != null) {
-      return new ResponseEntity<>(this.mentorService.getByName(name), HttpStatus.OK);
+    if (name == null || name.isEmpty()) {
+      return new ResponseEntity<>(mentorService.getAll(), HttpStatus.OK);
+    } else if (mentorService.existsByName(name)) {
+      return new ResponseEntity<>(mentorService.getByName(name), HttpStatus.OK);
     } else {
       throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
     }
@@ -40,8 +40,8 @@ public class MentorController {
 
   @PostMapping("/mentor")
   public ResponseEntity createNewMentor(@RequestBody MentorDTO mentorDTO) throws Exception {
-    if (!this.mentorService.existsByName(mentorDTO.getName())) {
-      this.mentorService.save(mentorDTO);
+    if (!mentorService.existsByName(mentorDTO.getName())) {
+      mentorService.save(mentorDTO);
       return new ResponseEntity<>("Mentor created", HttpStatus.OK);
     } else {
       throw new GeneralException("Name already exists in the database", HttpStatus.BAD_REQUEST);
@@ -50,8 +50,8 @@ public class MentorController {
 
   @DeleteMapping("/mentor/{id}")
   public ResponseEntity deleteMentor(@PathVariable (value = "id") long id) throws Exception {
-    if (this.mentorService.existsById(id)) {
-      this.mentorService.deleteById(id);
+    if (mentorService.existsById(id)) {
+      mentorService.deleteById(id);
       return new ResponseEntity<>("Mentor deleted", HttpStatus.OK);
     } else {
       throw new GeneralException("Mentor not found", HttpStatus.BAD_REQUEST);
