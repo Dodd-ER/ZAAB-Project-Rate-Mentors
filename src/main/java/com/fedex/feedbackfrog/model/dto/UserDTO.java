@@ -7,6 +7,14 @@ public class UserDTO {
   public boolean isAdmin;
   public List<ReviewDTO> sentReviews;
 
+  public UserDTO() {
+  }
+
+  public UserDTO(String name, boolean isAdmin) {
+    this.name = name;
+    this.isAdmin = isAdmin;
+  }
+
   public String getName() {
     return name;
   }
