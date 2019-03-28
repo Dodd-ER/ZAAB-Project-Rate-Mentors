@@ -7,6 +7,7 @@ public class MentorDTO {
   int points;
   List<ReviewDTO> receivedReviews;
   String slackAlias;
+  String image;
 
   public MentorDTO() {
   }
@@ -53,5 +54,13 @@ public class MentorDTO {
 
   public void setReceivedReviews(List<ReviewDTO> receivedReviews) {
     this.receivedReviews = receivedReviews;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 }
