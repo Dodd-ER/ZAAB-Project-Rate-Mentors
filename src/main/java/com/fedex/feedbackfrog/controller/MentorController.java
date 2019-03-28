@@ -2,7 +2,6 @@ package com.fedex.feedbackfrog.controller;
 
 import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.dto.MentorDTO;
-import com.fedex.feedbackfrog.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
