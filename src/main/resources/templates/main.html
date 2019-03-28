@@ -29,19 +29,19 @@
         <section th:object="${mentor}" class="search-result-item">
             <div class="image-container">
                 <a class="image-link" href="#"><img class="image"
-                                                    src="https://cdn3.iconfinder.com/data/icons/users-outline/60/50_-Blank_Profile-_user_people_group_team-512.png"
+                                                    src="https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/48426601_2514119031947815_2112618933147140096_n.jpg?_nc_cat=111&_nc_ht=scontent-vie1-1.xx&oh=267f86ba6adb4086d7c893d34fafd32f&oe=5D4BD028"
                                                     width="200" height="200" alt="profile"></a>
             </div>
             <div class="search-result-item-body">
                 <div class="row">
                     <div class="col-sm-9">
-                        <h4 class="search-result-item-heading"><a th:value="*{name}" class="text-dark" href="#">Name of the mentor</a></h4>
+                        <h4 class="search-result-item-heading"><a th:text="*{name}" class="text-dark" href="#">Name of the mentor</a></h4>
                         <p class="review-sum">Number of reviews</p>
                         <p class="description">You'll be able to read the start of the latest review here, or something
                             like that...</p>
                     </div>
                     <div class="col-sm-3 text-align-center">
-                        <p class="value3 mt-sm" th:value="'Points:'  + *{points}">Rating displayed</p>
+                        <p class="value3 mt-sm" th:text="'Points:'  + *{points}">Rating displayed</p>
                         <p class="fs-mini text-muted">We don't need this</p><a class="btn btn-primary btn-info btn-sm"
                                                                                href="review.html">Send feedback</a>
                     </div>

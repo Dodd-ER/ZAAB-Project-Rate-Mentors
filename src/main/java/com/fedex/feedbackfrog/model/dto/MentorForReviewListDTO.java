@@ -3,6 +3,8 @@ package com.fedex.feedbackfrog.model.dto;
 public class MentorForReviewListDTO {
   public String name;
 
+  public  MentorForReviewListDTO() {}
+
   public String getName() {
     return name;
   }
