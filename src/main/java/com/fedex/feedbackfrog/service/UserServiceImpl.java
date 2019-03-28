@@ -1,6 +1,7 @@
 package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.UserDTO;
+import com.fedex.feedbackfrog.model.entity.Review;
 import com.fedex.feedbackfrog.model.entity.User;
 import com.fedex.feedbackfrog.repository.UserRepository;
 import com.fedex.feedbackfrog.service.serviceInterface.CrudService;
@@ -61,9 +62,7 @@ public class UserServiceImpl implements CrudService<UserDTO> {
 
   @Override
   public void deleteById(long id) {
-    User deletedUser = new User();
-    deletedUser.setName("deleted user");
-    userRepository.findById(id).getSentReviews().forEach(review -> review.setReviewer(deletedUser));
+    userRepository.findById(id).getSentReviews().forEach(review -> review.setReviewer(null));
     userRepository.deleteById(id);
   }
 
