@@ -1,0 +1,28 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS mentor;
+DROP TABLE IF EXISTS review;
+
+CREATE TABLE user (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  is_admin BIT (1) NOT NULL,
+  email_address VARCHAR(255) NOT NULL,
+);
+
+CREATE TABLE mentor (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  points INTEGER (255) NOT NULL,
+  slack_alias VARCHAR(255) NOT NULL,
+);
+
+CREATE TABLE review (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  text VARCHAR(255) NOT NULL,
+  is_anonym BIT(1) NOT NULL,
+  rating ENUM('PLUS', 'MINUS') NOT NULL,
+  mentor_id BIGINT,
+  reviewer_id BIGINT,
+  FOREIGN KEY (mentor_id) REFERENCES mentor(id),
+  FOREIGN KEY (reviewer_id) REFERENCES user(id),
+);

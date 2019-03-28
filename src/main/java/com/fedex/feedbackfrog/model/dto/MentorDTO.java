@@ -12,6 +12,11 @@ public class MentorDTO {
   public MentorDTO() {
   }
 
+  public MentorDTO(String name, int points) {
+    this.name = name;
+    this.points = points;
+  }
+
   public MentorDTO(String name, int points, List<ReviewDTO> receivedReviews, String slackAlias) {
     this.name = name;
     this.points = points;
@@ -25,11 +30,6 @@ public class MentorDTO {
 
   public void setSlackAlias(String slackAlias) {
     this.slackAlias = slackAlias;
-  }
-
-  public MentorDTO(String name, int points) {
-    this.name = name;
-    this.points = points;
   }
 
   public String getName() {
