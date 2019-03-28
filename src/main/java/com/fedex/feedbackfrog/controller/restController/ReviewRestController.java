@@ -1,4 +1,4 @@
-package com.fedex.feedbackfrog.controller;
+package com.fedex.feedbackfrog.controller.restController;
 
 import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reviews")
-public class ReviewController {
+public class ReviewRestController {
 
   private ReviewServiceImpl service;
   private SlackMessageService slackMessageService;
 
   @Autowired
-  public ReviewController(ReviewServiceImpl service, SlackMessageService slackMessageService) {
+  public ReviewRestController(ReviewServiceImpl service, SlackMessageService slackMessageService) {
     this.service = service;
     this.slackMessageService = slackMessageService;
   }
