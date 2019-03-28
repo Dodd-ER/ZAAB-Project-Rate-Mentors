@@ -13,6 +13,7 @@ public class User {
   @OneToMany(mappedBy = "reviewer")
   private List<Review> sentReviews;
   private String emailAddress;
+  private String imgURL;
 
 
   public User() {}
@@ -34,6 +35,14 @@ public class User {
     this.name = name;
     this.isAdmin = isAdmin;
     this.emailAddress = emailAddress;
+  }
+
+  public String getImgURL() {
+    return imgURL;
+  }
+
+  public void setImgURL(String imgURL) {
+    this.imgURL = imgURL;
   }
 
   public long getId() {
