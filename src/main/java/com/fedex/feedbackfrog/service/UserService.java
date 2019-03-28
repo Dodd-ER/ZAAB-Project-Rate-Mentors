@@ -18,4 +18,7 @@ public interface UserService {
 
   void editUser(long id, UserDTO userDTO);
 
+  boolean checkExistenceById(long id);
+
+  boolean checkExistenceByName(String name);
 }

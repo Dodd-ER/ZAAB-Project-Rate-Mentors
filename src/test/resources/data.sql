@@ -1,12 +1,12 @@
-INSERT INTO user(id, is_admin, name) VALUES
-  (1, TRUE, 'Bea'),
-  (2, FALSE, 'Adel'),
-  (3, FALSE, 'Andor');
+INSERT INTO user(id, name, is_admin, email_address) VALUES
+  (1, 'Bea', TRUE, 'bea@gmail.com'),
+  (2, 'Adel', FALSE, 'adel@gmail.com'),
+  (3, 'Andor',FALSE, 'andor@gmail.com');
 
-INSERT INTO mentor(id, name, points) VALUES
-  (1, 'Ikarasz', '100'),
-  (2, 'Blanka', '100'),
-  (3, 'Gabor', '100');
+INSERT INTO mentor(id, name, points, slack_alias) VALUES
+  (1, 'Ikarasz', '100', 'Ika'),
+  (2, 'Blanka', '100', 'Bla'),
+  (3, 'Gabor', '100', 'Gab');
 
 INSERT INTO review(id, text, is_anonym, rating, mentor_id, reviewer_id) VALUES
   (1, 'Like your face!', FALSE, 'PLUS', 1, 2),

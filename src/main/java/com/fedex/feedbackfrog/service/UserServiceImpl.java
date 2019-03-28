@@ -1,7 +1,9 @@
 package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.UserDTO;
+import com.fedex.feedbackfrog.model.entity.Review;
 import com.fedex.feedbackfrog.model.entity.User;
+import com.fedex.feedbackfrog.repository.ReviewRepository;
 import com.fedex.feedbackfrog.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ public class UserServiceImpl implements UserService {
 
   private UserRepository userRepository;
   private ModelMapper mapper;
+  private ReviewRepository reviewRepository;
 
   @Autowired
-  public UserServiceImpl(ModelMapper mapper, UserRepository userRepository) {
+  public UserServiceImpl(ModelMapper mapper, UserRepository userRepository, ReviewRepository reviewRepository) {
     this.userRepository = userRepository;
     this.mapper = mapper;
+    this.reviewRepository = reviewRepository;
   }
 
   public UserDTO findUserByName(String name) {
@@ -50,6 +54,9 @@ public class UserServiceImpl implements UserService {
   }
 
   public void deleteUser(long id) {
+    User deletedUser = new User();
+    deletedUser.setName("deleted user");
+    userRepository.findById(id).getSentReviews().forEach(review -> review.setReviewer(deletedUser));
     userRepository.deleteById(id);
   }
 
@@ -66,5 +73,13 @@ public class UserServiceImpl implements UserService {
     dtoList.add(userDTO);
     }
     return dtoList;
+  }
+
+  public boolean checkExistenceById(long id) {
+    return userRepository.existsById(id);
+  }
+
+  public boolean checkExistenceByName(String name) {
+    return userRepository.existsByName(name);
   }
 }

@@ -21,8 +21,6 @@ dependencies {
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
     testImplementation group: 'com.h2database', name: 'h2', version: '1.4.197'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
-    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.197'
     compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
 
 }
