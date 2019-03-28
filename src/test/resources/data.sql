@@ -1,4 +1,4 @@
-INSERT INTO user(id, name, is_admin, email_address, img_URL) VALUES
+INSERT INTO user(id, name, is_admin, email_address, img_url) VALUES
   (1, 'Bea', TRUE, 'bea@gmail.com', 'img.jpg'),
   (2, 'Adel', FALSE, 'adel@gmail.com', 'img.jpg'),
   (3, 'Andor',FALSE, 'andor@gmail.com', 'img.jpg');
