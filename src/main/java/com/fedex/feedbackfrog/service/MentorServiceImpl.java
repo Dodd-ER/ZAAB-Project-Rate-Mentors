@@ -49,6 +49,13 @@ public class MentorServiceImpl implements MentorService{
   }
 
   @Override
+  public void editMentor(long id, MentorDTO mentorDTO) {
+    Mentor mentor = mentorRepository.findById(id);
+    modelMapper.map(mentorDTO, mentor);
+    mentorRepository.save(mentor);
+  }
+
+  @Override
   public void deleteMentorById(long id) {
     this.mentorRepository.deleteById(id);
   }

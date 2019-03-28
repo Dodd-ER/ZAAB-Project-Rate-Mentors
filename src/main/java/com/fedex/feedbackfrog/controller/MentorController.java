@@ -48,13 +48,23 @@ public class MentorController {
     }
   }
 
+  @PutMapping ("/mentor/{id}")
+  public ResponseEntity editUser (@PathVariable long id, @RequestBody MentorDTO mentorDTO) throws Exception {
+    if (mentorService.isMentorExistsById(id)) {
+      mentorService.editMentor(id, mentorDTO);
+      return new ResponseEntity<>("User edited", HttpStatus.OK);
+    } else {
+      throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
+    }
+  }
+
   @DeleteMapping("/mentor/{id}")
   public ResponseEntity deleteMentor(@PathVariable (value = "id") long id) throws Exception {
     if (this.mentorService.isMentorExistsById(id)) {
       this.mentorService.deleteMentorById(id);
       return new ResponseEntity<>("Mentor deleted", HttpStatus.OK);
     } else {
-      throw new GeneralException("Mentor not found", HttpStatus.BAD_REQUEST);
+      throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
     }
   }
 }

@@ -2,7 +2,7 @@ package com.fedex.feedbackfrog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fedex.feedbackfrog.FeedbackfrogApplication;
-import com.fedex.feedbackfrog.model.dto.MentorDTO;
+import com.fedex.feedbackfrog.model.dto.UserDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,100 +42,100 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration
 @ActiveProfiles("test")
 @Transactional
-public class MentorControllerTest {
+public class UserControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
   @Test
-  public void get_Mentor_By_Valid_Id_Endpoint_Test() throws Exception {
+  public void get_User_By_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor/1"))
+    mockMvc.perform(get("/user/1"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(jsonPath("$.name", is("Ikarasz")))
-        .andExpect(jsonPath("$.points", is(100)))
-        .andExpect(jsonPath("$.slackAlias", is("Ika")))
+        .andExpect(jsonPath("$.name", is("Bea")))
+        .andExpect(jsonPath("$.isAdmin", is(true)))
+        .andExpect(jsonPath("$.admin", is(true)))
         .andDo(print())
         .andReturn();
   }
 
   @Test
-  public void get_Mentor_By_Non_Valid_Id_Endpoint_Test() throws Exception {
+  public void get_User_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor/10"))
+    mockMvc.perform(get("/user/10"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(jsonPath("$.error", is("Mentor not found")))
+        .andExpect(jsonPath("$.error", is("Cannot find user with given ID")))
         .andDo(print())
         .andReturn();
   }
 
   @Test
-  public void get_All_Mentor_Endpoint_Test() throws Exception {
+  public void get_All_User_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor"))
+    mockMvc.perform(get("/user"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$", hasSize(3)))
-        .andExpect(jsonPath("$[0].name", is("Ikarasz")))
-        .andExpect(jsonPath("$[0].points", is(100)))
-        .andExpect(jsonPath("$[0].slackAlias", is("Ika")))
-        .andExpect(jsonPath("$[1].name", is("Blanka")))
-        .andExpect(jsonPath("$[1].points", is(100)))
-        .andExpect(jsonPath("$[1].slackAlias", is("Bla")))
-        .andExpect(jsonPath("$[2].name", is("Gabor")))
-        .andExpect(jsonPath("$[2].points", is(100)))
-        .andExpect(jsonPath("$[2].slackAlias", is("Gab")))
+        .andExpect(jsonPath("$[0].name", is("Bea")))
+        .andExpect(jsonPath("$[0].isAdmin", is(true)))
+        .andExpect(jsonPath("$[0].admin", is(true)))
+        .andExpect(jsonPath("$[1].name", is("Adel")))
+        .andExpect(jsonPath("$[1].isAdmin", is(false)))
+        .andExpect(jsonPath("$[1].admin", is(false)))
+        .andExpect(jsonPath("$[2].name", is("Andor")))
+        .andExpect(jsonPath("$[2].isAdmin", is(false)))
+        .andExpect(jsonPath("$[2].admin", is(false)))
         .andDo(print())
         .andReturn();
   }
 
   @Test
-  public void get_Mentor_By_Valid_Name_EndPoint_Test() throws Exception {
+  public void get_User_By_Valid_Name_EndPoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor?name=Ikarasz"))
+    mockMvc.perform(get("/user?name=Andor"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(jsonPath("$.name", is("Ikarasz")))
-        .andExpect(jsonPath("$.points", is(100)))
-        .andExpect(jsonPath("$.slackAlias", is("Ika")))
+        .andExpect(jsonPath("$.name", is("Andor")))
+        .andExpect(jsonPath("$.isAdmin", is(false)))
+        .andExpect(jsonPath("$.admin", is(false)))
         .andDo(print())
         .andReturn();
   }
 
   @Test
-  public void get_Mentor_By_Non_Valid_Name_Endpoint_Test() throws Exception {
+  public void get_User_By_Non_Valid_Name_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor?name=NotValidName"))
+    mockMvc.perform(get("/user?name=NotValidName"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(jsonPath("$.error", is("Mentor not found")))
+        .andExpect(jsonPath("$.error", is("User not found")))
         .andDo(print())
         .andReturn();
   }
 
   @Test
-  public void post_Mentor_With_New_Name_Endpoint_Test() throws Exception {
+  public void post_User_With_New_Name_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/mentor")
+        MockMvcRequestBuilders.post("/user")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
-                new MentorDTO("Barna", 100))))
+                new UserDTO("Dodo", false))))
         .andExpect(status().isCreated())
         .andDo(print())
         .andReturn();
   }
 
   @Test
-  public void post_Mentor_With_Already_Existing_Name_Endpoint_Test() throws Exception {
+  public void post_User_With_Already_Existing_Name_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/mentor")
+        MockMvcRequestBuilders.post("/user")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
-                new MentorDTO("Ikarasz", 100))))
+                new UserDTO("Adel", false))))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.error", is("Name already exists in the database")))
         .andDo(print())
@@ -146,10 +146,10 @@ public class MentorControllerTest {
   public void put_User_By_Valid_Id_EndPoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.put("/mentor/1")
+        MockMvcRequestBuilders.put("/user/1")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
-                new MentorDTO("IkaraszUpdated", 100))))
+                new UserDTO("BeaUpdated", true))))
         .andExpect(status().isOk())
         .andDo(print())
         .andReturn();
@@ -159,10 +159,10 @@ public class MentorControllerTest {
   public void put_User_By_Non_Valid_Id_EndPoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.put("/mentor/10")
+        MockMvcRequestBuilders.put("/user/10")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
-                new MentorDTO("NonExistedMentorUpdated", 1))))
+                new UserDTO("NonExistedUserUpdated", true))))
         .andExpect(jsonPath("$.error", is("Cannot find user with given ID")))
         .andExpect(status().isNotFound())
         .andDo(print())
@@ -170,10 +170,10 @@ public class MentorControllerTest {
   }
 
   @Test
-  public void delete_Mentor_By_Valid_Id_Endpoint_Test() throws Exception {
+  public void delete_User_By_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/mentor/1"))
+        MockMvcRequestBuilders.delete("/user/1"))
         .andExpect(status().isOk())
         .andDo(print())
         .andReturn();
@@ -183,10 +183,11 @@ public class MentorControllerTest {
   public void delete_Mentor_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/mentor/10"))
+        MockMvcRequestBuilders.delete("/user/10"))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.error", is("Mentor not found")))
+        .andExpect(jsonPath("$.error", is("Cannot find user with given ID")))
         .andDo(print())
         .andReturn();
   }
+
 }

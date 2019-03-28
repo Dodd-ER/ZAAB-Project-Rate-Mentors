@@ -9,6 +9,7 @@ public interface MentorService {
   MentorDTO findMentorByName(String name);
   MentorDTO findMentorById(long id);
   void saveNewMentor(MentorDTO mentorDTO);
+  void editMentor(long id, MentorDTO mentorDTO);
   void deleteMentorById(long id);
   boolean isMentorExistsByName(String name);
   boolean isMentorExistsById(long id);
