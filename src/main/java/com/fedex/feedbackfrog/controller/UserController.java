@@ -33,7 +33,7 @@ public class UserController {
   public ResponseEntity getUserById(@PathVariable long id) throws Exception {
     if (userService.existsById(id)) {
       return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
-    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.BAD_REQUEST);
+    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
   }
 
   //post -- to be modified based on google auth
