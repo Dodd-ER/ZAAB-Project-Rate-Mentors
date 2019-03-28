@@ -1,7 +1,6 @@
 package com.fedex.feedbackfrog.service;
 
 import com.fedex.feedbackfrog.model.dto.UserDTO;
-import com.fedex.feedbackfrog.model.entity.Review;
 import com.fedex.feedbackfrog.model.entity.User;
 import com.fedex.feedbackfrog.repository.ReviewRepository;
 import com.fedex.feedbackfrog.repository.UserRepository;
