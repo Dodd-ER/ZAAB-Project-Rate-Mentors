@@ -14,6 +14,7 @@ CREATE TABLE mentor (
   name VARCHAR(255) NOT NULL,
   points INTEGER (255) NOT NULL,
   slack_alias VARCHAR(255) NOT NULL,
+  image VARCHAR(255) NOT NULL,
 );
 
 CREATE TABLE review (
