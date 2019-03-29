@@ -26,7 +26,7 @@ public class UserRestController {
     } else if (userService.existsByName(name)) {
       return new ResponseEntity<>(userService.getByName(name), HttpStatus.OK);
     } else {
-      throw new GeneralException("User list is empty", HttpStatus.NOT_FOUND);
+      throw new GeneralException("User not found", HttpStatus.NOT_FOUND);
     }
   }
 
@@ -34,14 +34,18 @@ public class UserRestController {
   public ResponseEntity getUserById(@PathVariable long id) throws Exception {
     if (userService.existsById(id)) {
       return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
-    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.BAD_REQUEST);
+    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
   }
 
   //post -- to be modified based on google auth
   @PostMapping("/user")
-  public ResponseEntity addNewUser(@RequestBody UserDTO userDTO) {
-    userService.save(userDTO);
-    return new ResponseEntity<>("User created", HttpStatus.CREATED);
+  public ResponseEntity addNewUser(@RequestBody UserDTO userDTO) throws Exception{
+    if (!userService.existsByName(userDTO.getName())) {
+      userService.save(userDTO);
+      return new ResponseEntity<>("User created", HttpStatus.CREATED);
+    } else {
+      throw new GeneralException("Name already exists in the database", HttpStatus.BAD_REQUEST);
+    }
   }
 
   @PutMapping ("/user/{id}")
@@ -49,15 +53,18 @@ public class UserRestController {
     if (userService.existsById(id)) {
       userService.updateById(id, userDTO);
       return new ResponseEntity<>("User edited", HttpStatus.OK);
-    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
+    } else {
+      throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
+    }
   }
-
 
   @DeleteMapping("/user/{id}")
   public ResponseEntity deleteUser(@PathVariable long id) throws Exception {
     if (userService.existsById(id)) {
       userService.deleteById(id);
       return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-    } else throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
+    } else {
+      throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
+    }
   }
 }

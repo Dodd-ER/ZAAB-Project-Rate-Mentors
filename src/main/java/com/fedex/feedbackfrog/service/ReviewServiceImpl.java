@@ -1,7 +1,9 @@
 package com.fedex.feedbackfrog.service;
 
+import com.fedex.feedbackfrog.model.dto.MentorForReviewListDTO;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO;
 import com.fedex.feedbackfrog.model.dto.ReviewDTO_Post;
+import com.fedex.feedbackfrog.model.dto.UserForReviewListDTO;
 import com.fedex.feedbackfrog.model.entity.Review;
 import com.fedex.feedbackfrog.repository.MentorRepository;
 import com.fedex.feedbackfrog.repository.ReviewRepository;
@@ -50,6 +52,9 @@ public class ReviewServiceImpl implements CreateService<ReviewDTO_Post>,
     List<Review> reviewList = reviewRepository.findAll();
 
     for (Review review : reviewList) {
+      ReviewDTO dto = new ReviewDTO();
+      dto.setMentor(new MentorForReviewListDTO(review.getMentor().getName()));
+      dto.setReviewer(new UserForReviewListDTO(review.getReviewer().getName()));
       reviewDTOList.add(mapper.map(review, ReviewDTO.class));
     }
 
