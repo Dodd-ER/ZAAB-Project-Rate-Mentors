@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping("/review")
 public class ReviewController {
 
   private ReviewServiceImpl service;
@@ -27,7 +27,7 @@ public class ReviewController {
   public ResponseEntity getReviewsById(@PathVariable long id) throws GeneralException {
     if (service.existsById(id)){
       return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
-    } else throw new GeneralException("Cannot find review with given ID", HttpStatus.BAD_REQUEST);
+    } else throw new GeneralException("Cannot find review with given ID", HttpStatus.NOT_FOUND);
   }
 
   @GetMapping
@@ -47,9 +47,11 @@ public class ReviewController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity updateReview(@RequestBody ReviewDTO reviewDTO, @PathVariable long id) {
-    service.updateById(id, reviewDTO);
-    return new ResponseEntity(HttpStatus.I_AM_A_TEAPOT);
+  public ResponseEntity updateReview(@RequestBody ReviewDTO reviewDTO, @PathVariable long id) throws  Exception{
+    if (service.existsById(id)) {
+      service.updateById(id, reviewDTO);
+      return new ResponseEntity(HttpStatus.I_AM_A_TEAPOT);
+    } else throw new GeneralException("Cannot find review with given ID", HttpStatus.NOT_FOUND);
   }
 
   @DeleteMapping("/{id}")
@@ -57,6 +59,6 @@ public class ReviewController {
     if (service.existsById(id)){
       service.deleteById(id);
       return new ResponseEntity<>("Review successfully deleted", HttpStatus.OK);
-    } else throw new GeneralException("No such review", HttpStatus.BAD_REQUEST);
+    } else throw new GeneralException("No such review", HttpStatus.NOT_FOUND);
   }
 }

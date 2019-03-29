@@ -4,6 +4,14 @@ public class MentorForPostingReviewDTO {
   public String name;
   public String slackAlias;
 
+  public MentorForPostingReviewDTO() {
+  }
+
+  public MentorForPostingReviewDTO(String name, String slackAlias) {
+    this.name = name;
+    this.slackAlias = slackAlias;
+  }
+
   public String getSlackAlias() {
     return slackAlias;
   }
