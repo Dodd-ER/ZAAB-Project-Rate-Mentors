@@ -17,7 +17,7 @@ public class MentorController {
   }
 
   @GetMapping ("/")
-  public String main(Model model ) {
+  public String main(Model model) {
     model.addAttribute("mentors", service.getAll());
     return "main";
   }

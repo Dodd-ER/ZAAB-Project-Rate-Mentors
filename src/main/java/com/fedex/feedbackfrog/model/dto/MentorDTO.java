@@ -3,6 +3,7 @@ package com.fedex.feedbackfrog.model.dto;
 import java.util.List;
 
 public class MentorDTO {
+  long id;
   String name;
   int points;
   List<ReviewDTO> receivedReviews;
@@ -62,5 +63,13 @@ public class MentorDTO {
 
   public void setImage(String image) {
     this.image = image;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 }
