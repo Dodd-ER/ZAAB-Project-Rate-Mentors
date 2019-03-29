@@ -134,7 +134,7 @@ public class ReviewControllerTest {
         MockMvcRequestBuilders.post("/api/review")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
-                new ReviewDTO_Post("like", false, PLUS, andor, blanka))))
+                new ReviewDTO_Post("like", false, ReviewDTO_Post.RatingEnum.PLUS, andor, blanka))))
         .andExpect(status().isCreated())
         .andDo(print())
         .andReturn();
