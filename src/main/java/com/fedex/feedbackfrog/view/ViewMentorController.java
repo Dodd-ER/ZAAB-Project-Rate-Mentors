@@ -1,10 +1,13 @@
 package com.fedex.feedbackfrog.view;
 
+import com.fedex.feedbackfrog.model.dto.MentorDTO;
 import com.fedex.feedbackfrog.service.MentorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class ViewMentorController {
@@ -17,8 +20,9 @@ public class ViewMentorController {
   }
 
   @GetMapping ("/")
-  public String main(Model model ) {
-    model.addAttribute("mentors", service.getAll());
+  public String main(Model model) {
+    List<MentorDTO> mentors = service.getAll();
+    model.addAttribute("mentors", mentors);
     return "main";
   }
 }
