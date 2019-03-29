@@ -14,19 +14,13 @@
                     <fieldset>
                         <legend class="text-center header">Send a new feedback</a></legend>
                         <div class="form-group">
-                            <select name="mentor" th:value="mentor" th:field="${review.mentor}">
+                            <label for="mentor">Select mentor to send feedback to:  </label>
+                            <select name="mentor"  id="mentor" th:value="mentor" th:field="${review.mentor}">
                                 <option th:each="mentor:${mentors}"
                                         th:value="${mentor.name}"
                                         th:text="${mentor.name}"></option>
                             </select>
                         </div>
-
-                        <!--<div class="form-group">-->
-                            <!--<span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>-->
-                            <!--<div class="col-md-8">-->
-                                <!--<input id="lname" name="name" type="text" placeholder="Last Name" class="form-control">-->
-                            <!--</div>-->
-                        <!--</div>-->
 
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-pencil-square-o bigicon"></i></span>
@@ -36,20 +30,18 @@
                             </div>
                         </div>
 
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-md-12 text-center">-->
-                                <!--<button type="button" class="btn btn-primary btn-lg">Positive</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-md-12 text-center">-->
-                                <!--<button type="button" class="btn btn-warning btn-lg">Negative</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div>
+                            <label for="plus">Send positive frog</label>
+                            <input type="radio" id="plus" th:value="*{setRating(rating.PLUS)}">
+
+                            <label for="plus">Send disappointed frog</label>
+                            <input type="radio" id="minus" th:value="*{setRating(rating.MINUS)}">
+
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                <button type="submit" class="btn btn-info btn-lg">Submit</button>
                             </div>
                         </div>
                     </fieldset>
