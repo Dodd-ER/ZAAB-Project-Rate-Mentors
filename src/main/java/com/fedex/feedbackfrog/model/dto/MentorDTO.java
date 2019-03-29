@@ -3,6 +3,7 @@ package com.fedex.feedbackfrog.model.dto;
 import java.util.List;
 
 public class MentorDTO {
+
   long id;
   String name;
   int points;

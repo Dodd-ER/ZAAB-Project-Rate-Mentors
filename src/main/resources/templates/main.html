@@ -9,36 +9,39 @@
 
 <body class="container">
 
-<header class="col-md-10">
-    <nav class="navbar navbar-light" style="background-color: #138496;">
-         <span class="text-light">Welcome to Feedback Frog</span>
-        <form class="form-inline">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="at">@</span>
+<header>
+    <div class="navbar navbar-dark bg-info shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <span class="text-light">Welcome to Feedback Frog</span>
+            <form class="form-inline d-flex-right">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="at">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="search by username" aria-label="username"
+                           aria-describedby="at">
                 </div>
-                <input type="text" class="form-control" placeholder="search by username" aria-label="username"
-                       aria-describedby="at">
-            </div>
-        </form>
-    </nav>
+            </form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
 </header>
 
 <div class="row">
     <div class="col-md-10 col-md-pull-2"  th:each="mentor: ${mentors}">
         <section th:object="${mentor}" class="search-result-item">
             <div class="image-container">
-                <a class="image-link" href="#"><img class="image"
-                                                    src="https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/48426601_2514119031947815_2112618933147140096_n.jpg?_nc_cat=111&_nc_ht=scontent-vie1-1.xx&oh=267f86ba6adb4086d7c893d34fafd32f&oe=5D4BD028"
-                                                    width="200" height="200" alt="profile"></a>
+                <a class="image-link" href="#" ><img src="https://cdn3.iconfinder.com/data/icons/users-outline/60/50_-Blank_Profile-_user_people_group_team-512.png"
+                                                    th:src="${mentor.image}" width="200" height="200" alt="profile" class="image"></a>
             </div>
             <div class="search-result-item-body">
                 <div class="row">
                     <div class="col-sm-9">
                         <h4 class="search-result-item-heading"><a th:text="*{name}" class="text-dark" th:href="@{/reviews/{mentorid}(mentorid=*{id})}">Name of the mentor</a></h4>
                         <p class="review-sum" th:text="'Number of reviews: ' + *{receivedReviews.size()}"></p>
-                        <p class="description" th:text="*{receivedReviews.size()} == 0 ? 'This mentor has not received any review yet' : 'Latest review: ' + *{receivedReviews.get(receivedReviews.size() - 1).getText()}">You'll be able to read the start of the latest review here, or something
-                            like that...</p>
+                        <p class="description" th:text="*{receivedReviews.size()} == 0 ? 'This mentor has not received any review yet' : 'Latest review: ' + *{receivedReviews.get(receivedReviews.size() - 1).getText()}">
                     </div>
                     <div class="col-sm-3 text-align-center">
                         <p class="value3 mt-sm" th:text="'Points:'  + *{points}">Rating displayed</p>
@@ -48,24 +51,6 @@
                 </div>
             </div>
         </section>
-        <!--<div class="text-align-center">-->
-            <!--<ul class="pagination pagination-sm">-->
-                <!--<li class="disabled"><a href="#">Prev</a>-->
-                <!--</li>-->
-                <!--<li class="active"><a href="#">1</a>-->
-                <!--</li>-->
-                <!--<li><a href="#">2</a>-->
-                <!--</li>-->
-                <!--<li><a href="#">3</a>-->
-                <!--</li>-->
-                <!--<li><a href="#">4</a>-->
-                <!--</li>-->
-                <!--<li><a href="#">5</a>-->
-                <!--</li>-->
-                <!--<li><a href="#">Next</a>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
     </div>
 </div>
 
