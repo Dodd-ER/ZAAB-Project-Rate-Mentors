@@ -9,19 +9,24 @@
 
 <body class="container">
 
-<header class="col-md-10">
-    <nav class="navbar navbar-light" style="background-color: #138496;">
-         <span class="text-light">Welcome to Feedback Frog</span>
-        <form class="form-inline">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="at">@</span>
+<header>
+    <div class="navbar navbar-dark bg-info shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <span class="text-light">Welcome to Feedback Frog</span>
+            <form class="form-inline d-flex-right">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="at">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="search by username" aria-label="username"
+                           aria-describedby="at">
                 </div>
-                <input type="text" class="form-control" placeholder="search by username" aria-label="username"
-                       aria-describedby="at">
-            </div>
-        </form>
-    </nav>
+            </form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
 </header>
 
 <div class="row">
