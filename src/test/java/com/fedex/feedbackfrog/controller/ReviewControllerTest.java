@@ -54,7 +54,7 @@ public class ReviewControllerTest {
   @Test
   public void get_Review_By_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/review/1"))
+    mockMvc.perform(get("/api/review/1"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.text", is("Like your face!")))
@@ -68,7 +68,7 @@ public class ReviewControllerTest {
   @Test
   public void get_Review_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/review/10"))
+    mockMvc.perform(get("/api/review/10"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.error", is("Cannot find review with given ID")))
@@ -79,7 +79,7 @@ public class ReviewControllerTest {
   @Test
   public void get_All_Review_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/review"))
+    mockMvc.perform(get("/api/review"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$", hasSize(3)))
@@ -102,7 +102,7 @@ public class ReviewControllerTest {
   @Test
   public void get_Review_By_Valid_Text_EndPoint_Test() throws Exception {
 
-    mockMvc.perform(get("/review?text=Like your keyboard!"))
+    mockMvc.perform(get("/api/review?text=Like your keyboard!"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$", hasSize(1)))
@@ -117,7 +117,7 @@ public class ReviewControllerTest {
   @Test
   public void get_Review_By_Non_Valid_Text_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/review?text=NotValidText"))
+    mockMvc.perform(get("/api/review?text=NotValidText"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.error", is("Review(s) not found")))
@@ -131,7 +131,7 @@ public class ReviewControllerTest {
     MentorForPostingReviewDTO blanka = new MentorForPostingReviewDTO("Blanka", "slackalias");
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/review")
+        MockMvcRequestBuilders.post("/api/review")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new ReviewDTO_Post("like", false, PLUS, andor, blanka))))
@@ -144,7 +144,7 @@ public class ReviewControllerTest {
   public void put_Review_By_Valid_Id_EndPoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.put("/review/1")
+        MockMvcRequestBuilders.put("/api/review/1")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new ReviewDTO("LikeUpdated", false, PLUS))))
@@ -157,7 +157,7 @@ public class ReviewControllerTest {
   public void put_Review_By_Non_Valid_Id_EndPoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.put("/review/10")
+        MockMvcRequestBuilders.put("/api/review/10")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new ReviewDTO("LikeUpdated", false, PLUS))))
@@ -171,7 +171,7 @@ public class ReviewControllerTest {
   public void delete_Review_By_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/review/1"))
+        MockMvcRequestBuilders.delete("/api/review/1"))
         .andExpect(status().isOk())
         .andDo(print())
         .andReturn();
@@ -181,7 +181,7 @@ public class ReviewControllerTest {
   public void delete_Review_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/review/10"))
+        MockMvcRequestBuilders.delete("/api/review/10"))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.error", is("No such review")))
         .andDo(print())

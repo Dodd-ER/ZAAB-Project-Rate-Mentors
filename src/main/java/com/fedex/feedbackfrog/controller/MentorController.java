@@ -1,70 +1,24 @@
 package com.fedex.feedbackfrog.controller;
 
-import com.fedex.feedbackfrog.exception.GeneralException;
-import com.fedex.feedbackfrog.model.dto.MentorDTO;
 import com.fedex.feedbackfrog.service.MentorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
+@Controller
 public class MentorController {
 
-  private MentorServiceImpl mentorService;
+  private MentorServiceImpl service;
 
   @Autowired
   public MentorController(MentorServiceImpl mentorService) {
-    this.mentorService = mentorService;
+    this.service = mentorService;
   }
 
-  @GetMapping("/mentor/{id}")
-  public ResponseEntity getMentorById(@PathVariable(value = "id") long id) throws Exception {
-    if (mentorService.existsById(id)) {
-      return new ResponseEntity<>(mentorService.getById(id), HttpStatus.OK);
-    } else {
-      throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
-    }
-  }
-
-  @GetMapping("/mentor")
-  public ResponseEntity getMentor(@RequestParam(required = false) String name) throws Exception {
-    if (name == null || name.isEmpty()) {
-      return new ResponseEntity<>(mentorService.getAll(), HttpStatus.OK);
-    } else if (mentorService.existsByName(name)) {
-      return new ResponseEntity<>(mentorService.getByName(name), HttpStatus.OK);
-    } else {
-      throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
-    }
-  }
-
-  @PostMapping("/mentor")
-  public ResponseEntity createNewMentor(@RequestBody MentorDTO mentorDTO) throws Exception {
-    if (!mentorService.existsByName(mentorDTO.getName())) {
-      mentorService.save(mentorDTO);
-      return new ResponseEntity<>("Mentor created", HttpStatus.CREATED);
-    } else {
-      throw new GeneralException("Name already exists in the database", HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  @PutMapping ("/mentor/{id}")
-  public ResponseEntity editUser (@PathVariable long id, @RequestBody MentorDTO mentorDTO) throws Exception {
-    if (mentorService.existsById(id)) {
-      mentorService.updateById(id, mentorDTO);
-      return new ResponseEntity<>("User edited", HttpStatus.OK);
-    } else {
-      throw new GeneralException("Cannot find user with given ID", HttpStatus.NOT_FOUND);
-    }
-  }
-
-  @DeleteMapping("/mentor/{id}")
-  public ResponseEntity deleteMentor(@PathVariable (value = "id") long id) throws Exception {
-    if (mentorService.existsById(id)) {
-      mentorService.deleteById(id);
-      return new ResponseEntity<>("Mentor deleted", HttpStatus.OK);
-    } else {
-      throw new GeneralException("Mentor not found", HttpStatus.NOT_FOUND);
-    }
+  @GetMapping ("/")
+  public String main(Model model) {
+    model.addAttribute("mentors", service.getAll());
+    return "main";
   }
 }

@@ -1,4 +1,4 @@
-package com.fedex.feedbackfrog.controller;
+package com.fedex.feedbackfrog.controller.restController;
 
 import com.fedex.feedbackfrog.exception.GeneralException;
 import com.fedex.feedbackfrog.model.dto.UserDTO;
@@ -9,12 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class UserController {
+@RequestMapping("/api")
+public class UserRestController {
 
   private UserServiceImpl userService;
 
   @Autowired
-  public UserController(UserServiceImpl userService) {
+  public UserRestController(UserServiceImpl userService) {
     this.userService = userService;
   }
 
