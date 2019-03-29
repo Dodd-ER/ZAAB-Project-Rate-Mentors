@@ -50,7 +50,7 @@ public class MentorRestControllerTest {
   @Test
   public void get_Mentor_By_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor/1"))
+    mockMvc.perform(get("/api/mentor/1"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.name", is("Ikarasz")))
@@ -63,7 +63,7 @@ public class MentorRestControllerTest {
   @Test
   public void get_Mentor_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor/10"))
+    mockMvc.perform(get("/api/mentor/10"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.error", is("Mentor not found")))
@@ -74,7 +74,7 @@ public class MentorRestControllerTest {
   @Test
   public void get_All_Mentor_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor"))
+    mockMvc.perform(get("/api/mentor"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$", hasSize(3)))
@@ -94,7 +94,7 @@ public class MentorRestControllerTest {
   @Test
   public void get_Mentor_By_Valid_Name_EndPoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor?name=Ikarasz"))
+    mockMvc.perform(get("/api/mentor?name=Ikarasz"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.name", is("Ikarasz")))
@@ -107,7 +107,7 @@ public class MentorRestControllerTest {
   @Test
   public void get_Mentor_By_Non_Valid_Name_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/mentor?name=NotValidName"))
+    mockMvc.perform(get("/api/mentor?name=NotValidName"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.error", is("Mentor not found")))
@@ -119,7 +119,7 @@ public class MentorRestControllerTest {
   public void post_Mentor_With_New_Name_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/mentor")
+        MockMvcRequestBuilders.post("/api/mentor")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new MentorDTO("Barna", 100))))
@@ -132,7 +132,7 @@ public class MentorRestControllerTest {
   public void post_Mentor_With_Already_Existing_Name_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/mentor")
+        MockMvcRequestBuilders.post("/api/mentor")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new MentorDTO("Ikarasz", 100))))
@@ -143,37 +143,10 @@ public class MentorRestControllerTest {
   }
 
   @Test
-  public void put_User_By_Valid_Id_EndPoint_Test() throws Exception {
-
-    mockMvc.perform(
-        MockMvcRequestBuilders.put("/mentor/1")
-            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-            .content(new ObjectMapper().writeValueAsString(
-                new MentorDTO("IkaraszUpdated", 100))))
-        .andExpect(status().isOk())
-        .andDo(print())
-        .andReturn();
-  }
-
-  @Test
-  public void put_User_By_Non_Valid_Id_EndPoint_Test() throws Exception {
-
-    mockMvc.perform(
-        MockMvcRequestBuilders.put("/mentor/10")
-            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-            .content(new ObjectMapper().writeValueAsString(
-                new MentorDTO("NonExistedMentorUpdated", 1))))
-        .andExpect(jsonPath("$.error", is("Cannot find user with given ID")))
-        .andExpect(status().isNotFound())
-        .andDo(print())
-        .andReturn();
-  }
-
-  @Test
   public void delete_Mentor_By_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/mentor/1"))
+        MockMvcRequestBuilders.delete("/api/mentor/1"))
         .andExpect(status().isOk())
         .andDo(print())
         .andReturn();
@@ -183,8 +156,8 @@ public class MentorRestControllerTest {
   public void delete_Mentor_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/mentor/10"))
-        .andExpect(status().isNotFound())
+        MockMvcRequestBuilders.delete("/api/mentor/10"))
+        .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.error", is("Mentor not found")))
         .andDo(print())
         .andReturn();

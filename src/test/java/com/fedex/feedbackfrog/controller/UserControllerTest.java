@@ -50,7 +50,7 @@ public class UserControllerTest {
   @Test
   public void get_User_By_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/user/1"))
+    mockMvc.perform(get("/api/user/1"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.name", is("Bea")))
@@ -63,7 +63,7 @@ public class UserControllerTest {
   @Test
   public void get_User_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/user/10"))
+    mockMvc.perform(get("/api/user/10"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.error", is("Cannot find user with given ID")))
@@ -74,7 +74,7 @@ public class UserControllerTest {
   @Test
   public void get_All_User_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/user"))
+    mockMvc.perform(get("/api/user"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$", hasSize(3)))
@@ -94,7 +94,7 @@ public class UserControllerTest {
   @Test
   public void get_User_By_Valid_Name_EndPoint_Test() throws Exception {
 
-    mockMvc.perform(get("/user?name=Andor"))
+    mockMvc.perform(get("/api/user?name=Andor"))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.name", is("Andor")))
@@ -107,7 +107,7 @@ public class UserControllerTest {
   @Test
   public void get_User_By_Non_Valid_Name_Endpoint_Test() throws Exception {
 
-    mockMvc.perform(get("/user?name=NotValidName"))
+    mockMvc.perform(get("/api/user?name=NotValidName"))
         .andExpect(status().isNotFound())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(jsonPath("$.error", is("User not found")))
@@ -119,7 +119,7 @@ public class UserControllerTest {
   public void post_User_With_New_Name_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/user")
+        MockMvcRequestBuilders.post("/api/user")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new UserDTO("Dodo", false))))
@@ -132,7 +132,7 @@ public class UserControllerTest {
   public void post_User_With_Already_Existing_Name_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/user")
+        MockMvcRequestBuilders.post("/api/user")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new UserDTO("Adel", false))))
@@ -146,7 +146,7 @@ public class UserControllerTest {
   public void put_User_By_Valid_Id_EndPoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.put("/user/1")
+        MockMvcRequestBuilders.put("/api/user/1")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new UserDTO("BeaUpdated", true))))
@@ -159,7 +159,7 @@ public class UserControllerTest {
   public void put_User_By_Non_Valid_Id_EndPoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.put("/user/10")
+        MockMvcRequestBuilders.put("/api/user/10")
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
             .content(new ObjectMapper().writeValueAsString(
                 new UserDTO("NonExistedUserUpdated", true))))
@@ -173,7 +173,7 @@ public class UserControllerTest {
   public void delete_User_By_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/user/1"))
+        MockMvcRequestBuilders.delete("/api/user/1"))
         .andExpect(status().isOk())
         .andDo(print())
         .andReturn();
@@ -183,7 +183,7 @@ public class UserControllerTest {
   public void delete_Mentor_By_Non_Valid_Id_Endpoint_Test() throws Exception {
 
     mockMvc.perform(
-        MockMvcRequestBuilders.delete("/user/10"))
+        MockMvcRequestBuilders.delete("/api/user/10"))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.error", is("Cannot find user with given ID")))
         .andDo(print())
