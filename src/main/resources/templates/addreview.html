@@ -10,14 +10,14 @@
     <div class="row align-items-center">
         <div class="col-md-12">
             <div class="well well-sm">
-                <form class="form-horizontal" method="post" th:action="@{/view/review/add}" th:object="${review}">
+                <form class="form-horizontal" method="post" action="#" th:action="@{/vmi}" th:object="${review}">
                     <fieldset>
                         <legend class="text-center header">Send a new feedback</a></legend>
                         <div class="form-group">
                             <label for="mentor">Select mentor to send feedback to:  </label>
-                            <select name="mentor"  id="mentor" th:value="mentor" th:field="${review.mentor}">
+                            <select name="mentor"  id="mentor" th:field="${review.mentor}">
                                 <option th:each="mentor:${mentors}"
-                                        th:value="${mentor.name}"
+                                        th:value="${mentor.id}"
                                         th:text="${mentor.name}"></option>
                             </select>
                         </div>
@@ -32,11 +32,10 @@
 
                         <div>
                             <label for="plus">Send positive frog</label>
-                            <input type="radio" id="plus" th:value="*{setRating(rating.PLUS)}">
+                            <input type="radio" id="plus" th:value="${positive}" th:field="*{rating}">
 
-                            <label for="plus">Send disappointed frog</label>
-                            <input type="radio" id="minus" th:value="*{setRating(rating.MINUS)}">
-
+                            <label for="minus">Send disappointed frog</label>
+                            <input type="radio" id="minus" th:value="${negative}" th:field="*{rating}">
                         </div>
 
                         <div class="form-group">

@@ -3,8 +3,8 @@ package com.fedex.feedbackfrog.model.dto;
 public class ReviewDTO_Post {
   public String text;
   public boolean isAnonym;
-  public ReviewDTO.Rating rating;
-  public enum Rating {
+  public RatingEnum rating;
+  public enum RatingEnum {
     PLUS,
     MINUS
   }
@@ -17,7 +17,7 @@ public class ReviewDTO_Post {
 
   public ReviewDTO_Post(String text,
                         boolean isAnonym,
-                        ReviewDTO.Rating rating,
+                        RatingEnum rating,
                         UserForReviewListDTO reviewer,
                         MentorForPostingReviewDTO mentor) {
     this.text = text;
@@ -43,11 +43,11 @@ public class ReviewDTO_Post {
     isAnonym = anonym;
   }
 
-  public ReviewDTO.Rating getRating() {
+  public RatingEnum getRating() {
     return rating;
   }
 
-  public void setRating(ReviewDTO.Rating rating) {
+  public void setRating(RatingEnum rating) {
     this.rating = rating;
   }
 

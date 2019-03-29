@@ -32,12 +32,14 @@ public class ReviewController {
   public String addReviewPage(Model model) {
     model.addAttribute("mentors", mentorService.getAll());
     model.addAttribute("review", new ReviewDTO_Post());
+    model.addAttribute("positive", ReviewDTO_Post.RatingEnum.PLUS);
+    model.addAttribute("negative", ReviewDTO_Post.RatingEnum.MINUS);
     return "addreview";
   }
 
-  @PostMapping("/view/review/add")
-  public String addNewReview(@ModelAttribute ReviewDTO_Post reviewDto ) {
-    reviewService.save(reviewDto);
+  @PostMapping("/vmi")
+  public String addNewReview(@ModelAttribute ReviewDTO_Post reviewDto) {
+    //reviewService.save(reviewDto);
     return "redirect:/";
   }
 }
