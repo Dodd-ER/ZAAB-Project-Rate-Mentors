@@ -3,8 +3,7 @@ package com.fedex.feedbackfrog.model.dto;
 public class UserForReviewListDTO {
   public String name;
 
-  public UserForReviewListDTO() {
-  }
+  public UserForReviewListDTO() {}
 
   public UserForReviewListDTO(String name) {
     this.name = name;
@@ -16,5 +15,4 @@ public class UserForReviewListDTO {
   public void setName(String name) {
     this.name = name;
   }
-
 }
