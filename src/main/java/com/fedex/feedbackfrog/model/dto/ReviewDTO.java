@@ -12,6 +12,15 @@ public class ReviewDTO {
   public UserForReviewListDTO reviewer;
   public MentorForReviewListDTO mentor;
 
+  public ReviewDTO() {
+  }
+
+  public ReviewDTO(String text, boolean isAnonym, Rating rating) {
+    this.text = text;
+    this.isAnonym = isAnonym;
+    this.rating = rating;
+  }
+
   public String getText() {
     return text;
   }
