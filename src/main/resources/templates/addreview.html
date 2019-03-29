@@ -10,7 +10,7 @@
     <div class="row align-items-center">
         <div class="col-md-12">
             <div class="well well-sm">
-                <form class="form-horizontal" method="post" th:action="@{/view/review/add}" th:object="review">
+                <form class="form-horizontal" method="post" th:action="@{/view/review/add}" th:object="${review}">
                     <fieldset>
                         <legend class="text-center header">Send a new feedback</a></legend>
                         <div class="form-group">
