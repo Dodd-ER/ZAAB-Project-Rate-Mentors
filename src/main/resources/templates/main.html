@@ -39,10 +39,9 @@
             <div class="search-result-item-body">
                 <div class="row">
                     <div class="col-sm-9">
-                        <h4 class="search-result-item-heading"><a th:text="${mentor.getName()}" class="text-dark" href="#">Name of the mentor</a></h4>
-                        <p class="review-sum">Number of reviews</p>
-                        <p class="description">You'll be able to read the start of the latest review here, or something
-                            like that...</p>
+                        <h4 class="search-result-item-heading"><a th:text="*{name}" class="text-dark" th:href="@{/reviews/{mentorid}(mentorid=*{id})}">Name of the mentor</a></h4>
+                        <p class="review-sum" th:text="'Number of reviews: ' + *{receivedReviews.size()}"></p>
+                        <p class="description" th:text="*{receivedReviews.size()} == 0 ? 'This mentor has not received any review yet' : 'Latest review: ' + *{receivedReviews.get(receivedReviews.size() - 1).getText()}">
                     </div>
                     <div class="col-sm-3 text-align-center">
                         <p class="value3 mt-sm" th:text="'Points:'  + *{points}">Rating displayed</p>

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements CreateService<ReviewDTO_Post>,
@@ -87,6 +88,21 @@ public class ReviewServiceImpl implements CreateService<ReviewDTO_Post>,
   public List<ReviewDTO> getByTextContaining(String text) {
     List<ReviewDTO> reviewDTOList = new ArrayList<>();
     List<Review> reviewList = reviewRepository.getByTextContaining(text);
+
+    for (Review review : reviewList) {
+      reviewDTOList.add(mapper.map(review, ReviewDTO.class));
+    }
+
+    return reviewDTOList;
+  }
+
+  public List<ReviewDTO> getByMentor(long id){
+    List<ReviewDTO> reviewDTOList = new ArrayList<>();
+    List<Review> reviewList = reviewRepository
+        .findAll()
+        .stream()
+        .filter(review -> review.getMentor().getId() == id)
+        .collect(Collectors.toList());
 
     for (Review review : reviewList) {
       reviewDTOList.add(mapper.map(review, ReviewDTO.class));

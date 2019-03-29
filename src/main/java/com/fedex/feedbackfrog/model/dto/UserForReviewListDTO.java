@@ -4,6 +4,7 @@ public class UserForReviewListDTO {
   public String name;
 
   public UserForReviewListDTO() {}
+
   public UserForReviewListDTO(String name) {
     this.name = name;
   }
